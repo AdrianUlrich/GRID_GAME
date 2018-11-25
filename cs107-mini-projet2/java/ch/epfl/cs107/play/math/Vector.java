@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.math;
+	package ch.epfl.cs107.play.math;
 
 import java.io.Serializable;
 
