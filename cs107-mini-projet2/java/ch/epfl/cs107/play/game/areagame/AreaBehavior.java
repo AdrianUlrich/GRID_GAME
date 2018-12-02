@@ -17,7 +17,22 @@ public abstract class AreaBehavior {
 	private final Cell[][] cells;
 
 	// TODO implements me #PROJECT #TUTO
-
+	
+	public final int getWidth() {
+		return width;
+	}
+	
+	public final int getHeight() {
+		return height;
+	}
+	
+	public Image getBehaviorMap() {
+		return behaviorMap;
+	}
+	
+	public void setCell(int x,int y, Cell cell) {
+		cells[x][y] = cell;
+	}
 	/**
 	 * Default AreaBehavior Constructor
 	 * 

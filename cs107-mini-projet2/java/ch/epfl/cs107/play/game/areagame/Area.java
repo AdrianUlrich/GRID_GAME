@@ -16,7 +16,8 @@ import java.util.List;
 
 /**
  * Area is a "Part" of the AreaGame. It is characterized by its AreaBehavior and
- * a List of Actors
+ * a List of Actors.
+ *  Area implements Playable
  */
 public abstract class Area implements Playable {
 
@@ -35,6 +36,11 @@ public abstract class Area implements Playable {
 	// effective center of the view
 	private Vector viewCenter ;
 	
+	/// The behavior Map
+	private AreaBehavior areaBehavior ; 
+	
+	private boolean wasVisited = false;
+	
 	// TODO implements me #PROJECT #TUTO
 
 	/**
@@ -42,7 +48,10 @@ public abstract class Area implements Playable {
 	 *         direction
 	 */
 	public abstract float getCameraScaleFactor();
-
+	
+	final protected void setBehavior(AreaBehavior ab) {
+		
+	}
 	/**
 	 * Add an actor to the actors list
 	 * 
@@ -104,7 +113,7 @@ public abstract class Area implements Playable {
 	 */
 	public final int getWidth() {
 		// TODO implements me #PROJECT #TUTO
-		return 0;
+		return areaBehavior.getWidth();
 	}
 
 	/**
@@ -114,7 +123,7 @@ public abstract class Area implements Playable {
 	 */
 	public final int getHeight() {
 		// TODO implements me #PROJECT #TUTO
-		return 0;
+		return areaBehavior.getHeight();
 	}
 
 	/** @return the Window Keyboard for inputs */
@@ -123,13 +132,16 @@ public abstract class Area implements Playable {
 		return null;
 	}
 
-	/// Area implements Playable
+	public final boolean getVisited() {
+		return wasVisited;
+	}
 
 	@Override
 	public boolean begin(Window window, FileSystem fileSystem) {
 		// TODO implements me #PROJECT #TUTO
 		this.fileSystem = fileSystem;
 		this.window = window;
+		wasVisited = true;
 		actors = new LinkedList<>();
 		viewCenter =  Vector.ZERO;
 		viewCandidate = null;
@@ -153,8 +165,8 @@ public abstract class Area implements Playable {
 		updateCamera();
 		purgeRegistration();
 		actors.forEach((actor) -> {
-			actor.draw(window);
 			actor.update(deltaTime);
+			actor.draw(window);
 		});
 	}
 

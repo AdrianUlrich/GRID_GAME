@@ -17,7 +17,7 @@ public class MovingRock extends GraphicsEntity {
 		super(position, new ImageGraphics(ResourcePath.getSprite("rock.3"), 0.1f, 0.1f, null, Vector.ZERO, 1.0f,
 				-Float.MAX_VALUE));
 		this.text = new TextGraphics(text, 0.04f, Color.BLUE);
-		msg=text;
+		msg = text;
 		this.text.setParent(this);
 		this.text.setAnchor(new Vector(-0.3f, 0.1f));
 	}
@@ -35,10 +35,11 @@ public class MovingRock extends GraphicsEntity {
 	}
 
 	public void changeText(String text) {
-	    this.text.setText(text);
+		this.text.setText(text);
 	}
+
 	public void resetText() {
-	    this.text.setText(msg);
+		this.text.setText(msg);
 	}
 
 }
