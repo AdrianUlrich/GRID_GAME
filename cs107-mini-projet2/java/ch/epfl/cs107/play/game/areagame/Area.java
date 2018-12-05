@@ -50,7 +50,7 @@ public abstract class Area implements Playable {
 	public abstract float getCameraScaleFactor();
 	
 	final protected void setBehavior(AreaBehavior ab) {
-		
+		this.areaBehavior = ab;
 	}
 	/**
 	 * Add an actor to the actors list
@@ -139,6 +139,8 @@ public abstract class Area implements Playable {
 	@Override
 	public boolean begin(Window window, FileSystem fileSystem) {
 		// TODO implements me #PROJECT #TUTO
+		this.registeredActors = new LinkedList<>();
+		this.unregisteredActors = new LinkedList<>();
 		this.fileSystem = fileSystem;
 		this.window = window;
 		wasVisited = true;
@@ -191,7 +193,7 @@ public abstract class Area implements Playable {
 		}
 		// Compute new viewport
 		// TODO find the right scale factor
-		Transform viewTransform = Transform.I.scaled(1).translated(viewCenter) ;
+		Transform viewTransform = Transform.I.scaled(getCameraScaleFactor()).translated(viewCenter) ;
 		window.setRelativeTransform(viewTransform) ;
 	}
 	

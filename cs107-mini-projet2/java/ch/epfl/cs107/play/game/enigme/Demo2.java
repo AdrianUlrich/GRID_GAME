@@ -21,13 +21,13 @@ public class Demo2 extends AreaGame{
 	@Override
 	public int getFrameRate() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 24;
 	}
 
 	@Override
 	public String getTitle() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Demo2";
 	}
 	
 	@Override

@@ -13,6 +13,7 @@ public class Demo2Area extends Area {
 	public Demo2Area(String title) {
 		this.title = title;
 	}
+	
 	@Override
 	public String getTitle() {
 		return title;
@@ -21,13 +22,15 @@ public class Demo2Area extends Area {
 	public boolean begin(Window window, FileSystem fileSystem) {
 		super.begin(window, fileSystem);
 		setBehavior(new Demo2Behavior(window , getTitle())) ;
-		registerActor(new Background(this)) ;
+		registerActor(new Background(this));
+
 		return true;
 	}
+	
 	@Override
 	public float getCameraScaleFactor() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 25;
 	}
 
 }
