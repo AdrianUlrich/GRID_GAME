@@ -13,11 +13,11 @@ import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Area is a "Part" of the AreaGame. It is characterized by its AreaBehavior and
- * a List of Actors.
- *  Area implements Playable
+ * a List of Actors. Area implements Playable
  */
 public abstract class Area implements Playable {
 
@@ -29,18 +29,21 @@ public abstract class Area implements Playable {
 	private List<Actor> actors;
 	private List<Actor> registeredActors;
 	private List<Actor> unregisteredActors;
-	
+
+	private Map<Interactable, List<DiscreteCoordinates>> interactablesToEnter;
+	private Map<Interactable, List<DiscreteCoordinates>> interactablesToLeave;
+
 	// Camera Parameter
 	// actor on which the view is centered
-	private Actor viewCandidate ;
+	private Actor viewCandidate;
 	// effective center of the view
-	private Vector viewCenter ;
-	
+	private Vector viewCenter;
+
 	/// The behavior Map
-	private AreaBehavior areaBehavior ; 
-	
+	private AreaBehavior areaBehavior;
+
 	private boolean wasVisited = false;
-	
+
 	// TODO implements me #PROJECT #TUTO
 
 	/**
@@ -48,10 +51,27 @@ public abstract class Area implements Playable {
 	 *         direction
 	 */
 	public abstract float getCameraScaleFactor();
-	
+
 	final protected void setBehavior(AreaBehavior ab) {
 		this.areaBehavior = ab;
 	}
+
+	public final boolean leaveAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates) {
+		if (areaBehavior.canLeave(entity, coordinates)) {
+			interactablesToLeave.put(entity , coordinates) ;
+			return true;
+		}
+		return false;
+	}
+
+	public final boolean enterAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates) {
+		if (areaBehavior.canEnter(entity, coordinates)) {
+			interactablesToEnter.put(entity , coordinates) ;
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Add an actor to the actors list
 	 * 
@@ -62,10 +82,14 @@ public abstract class Area implements Playable {
 		// Here decisions at the area level to decide if an actor
 		// must be added or not
 		boolean errorOccured = !actors.add(a);
+		if (a instanceof Interactable) {
+			errorOccured = errorOccured || !enterAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
+		}
 		if (errorOccured && !forced) {
-			System.out.println("Actor " + a + " cannot be completely added , so remove it from where it was");
+			System.out.println("Actor " + a + " cannot be completely added , so removed it from where it was");
 			removeActor(a, true);
 		}
+
 	}
 
 	/**
@@ -76,6 +100,9 @@ public abstract class Area implements Playable {
 	 */
 	private void removeActor(Actor a, boolean forced) {
 		boolean errorOccured = !actors.remove(a);
+		if (a instanceof Interactable) {
+			errorOccured = errorOccured || !leaveAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
+		}
 		if (errorOccured && !forced) {
 			System.out.println("Actor " + a + " cannot be completely removed , so added it where it was");
 			addActor(a, true);
@@ -145,7 +172,7 @@ public abstract class Area implements Playable {
 		this.window = window;
 		wasVisited = true;
 		actors = new LinkedList<>();
-		viewCenter =  Vector.ZERO;
+		viewCenter = Vector.ZERO;
 		viewCandidate = null;
 		return true;
 	}
@@ -166,24 +193,34 @@ public abstract class Area implements Playable {
 		// TODO implements me #PROJECT #TUTO
 		updateCamera();
 		purgeRegistration();
-		actors.forEach((actor) -> {
+		for(Actor actor : actors){
 			actor.update(deltaTime);
 			actor.draw(window);
-		});
+		}
 	}
 
 	private final void purgeRegistration() {
 		// add newly registered actors to the actors list
-		registeredActors.forEach((actor) -> {
+		for(Actor actor : registeredActors){
 			addActor(actor, false);
-		});
+		}
 		// remove unwanted actors from the actor list
-		unregisteredActors.forEach((actor) -> {
+		for(Actor actor : unregisteredActors){
 			removeActor(actor, false);
-		});
+		}
+		
+		for(Interactable i : interactablesToEnter.keySet()) {
+			areaBehavior.enter(i, interactablesToEnter.get(i));;
+		}
+		
+		for(Interactable i : interactablesToLeave.keySet()) {
+			areaBehavior.enter(i, interactablesToLeave.get(i));;
+		}
 		// once updated actors, clears lists
 		registeredActors.clear();
 		unregisteredActors.clear();
+		interactablesToEnter.clear();
+		interactablesToLeave.clear();
 	}
 
 	private void updateCamera() {
@@ -193,13 +230,13 @@ public abstract class Area implements Playable {
 		}
 		// Compute new viewport
 		// TODO find the right scale factor
-		Transform viewTransform = Transform.I.scaled(getCameraScaleFactor()).translated(viewCenter) ;
-		window.setRelativeTransform(viewTransform) ;
+		Transform viewTransform = Transform.I.scaled(getCameraScaleFactor()).translated(viewCenter);
+		window.setRelativeTransform(viewTransform);
 	}
-	
-	public final void setViewCandidate(Actor a){
-		this.viewCandidate = a ;
-		}
+
+	public final void setViewCandidate(Actor a) {
+		this.viewCandidate = a;
+	}
 
 	/**
 	 * Suspend method: Can be overridden, called before resume other
