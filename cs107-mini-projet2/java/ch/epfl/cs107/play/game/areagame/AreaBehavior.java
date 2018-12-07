@@ -23,6 +23,20 @@ public abstract class AreaBehavior {
 	private final int width, height;
 	/// We will convert the image into an array of cells
 	private final Cell[][] cells;
+	
+	/**
+	 * Default AreaBehavior Constructor
+	 * 
+	 * @param window   (Window): graphic context, not null
+	 * @param fileName (String): name of the file containing the behavior image, not null
+	 */
+	public AreaBehavior(Window window, String fileName) {
+		// TODO implements me #PROJECT #TUTO
+		behaviorMap = window.getImage(ResourcePath.getBehaviors(fileName), null, false);
+		width = behaviorMap.getWidth();
+		height = behaviorMap.getHeight();
+		cells = new Cell[width][height];
+	}
 
 	// TODO implements me #PROJECT #TUTO
 	public boolean canLeave(Interactable entity, List<DiscreteCoordinates> coordinates) {
@@ -36,7 +50,7 @@ public abstract class AreaBehavior {
 
 	public boolean canEnter(Interactable entity, List<DiscreteCoordinates> coordinates) {
 		for (DiscreteCoordinates coordinate : coordinates) {
-			if (cells[coordinate.x][coordinate.y].canEnter(entity) == false) {
+			if (!cells[coordinate.x][coordinate.y].canEnter(entity)) {
 				return false;
 			}
 		}
@@ -56,7 +70,6 @@ public abstract class AreaBehavior {
 		}
 	}
 
-
 	public final int getWidth() {
 		return width;
 	}
@@ -69,23 +82,16 @@ public abstract class AreaBehavior {
 		return behaviorMap;
 	}
 
+	protected Cell getCell(int x, int y) {
+		return cells[x][y];
+	}
+
 	public void setCell(int x, int y, Cell cell) {
 		cells[x][y] = cell;
 	}
-
-	/**
-	 * Default AreaBehavior Constructor
-	 * 
-	 * @param window   (Window): graphic context, not null
-	 * @param fileName (String): name of the file containing the behavior image, not
-	 *                 null
-	 */
-	public AreaBehavior(Window window, String fileName) {
-		// TODO implements me #PROJECT #TUTO
-		behaviorMap = window.getImage(ResourcePath.getBehaviors(fileName), null, false);
-		width = behaviorMap.getWidth();
-		height = behaviorMap.getHeight();
-		cells = new Cell[width][height];
+	
+	public Cell[][] getCells(){
+		return cells;
 	}
 
 	// TODO implements me #PROJECT #TUTO
@@ -93,11 +99,12 @@ public abstract class AreaBehavior {
 		DiscreteCoordinates pos;
 		Set<Interactable> interactables;
 
-		private Set<Interactable> interactableActors = new HashSet<Interactable>();
+		private Set<Interactable> interactableActors;
 
 		public Cell(int x, int y) {
 			pos = new DiscreteCoordinates(x, y);
 			interactables = new HashSet<>();
+			interactableActors = new HashSet<Interactable>();
 		}
 
 		public List<DiscreteCoordinates> getCurrentCells() {

@@ -11,6 +11,7 @@ import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,23 @@ public abstract class Area implements Playable {
 	private boolean wasVisited = false;
 
 	// TODO implements me #PROJECT #TUTO
-
+	
+	@Override
+	public boolean begin(Window window, FileSystem fileSystem) {
+		// TODO implements me #PROJECT #TUTO
+		this.actors = new LinkedList<>();
+		this.registeredActors = new LinkedList<>();
+		this.unregisteredActors = new LinkedList<>();
+		this.interactablesToEnter = new HashMap<>();
+		this.interactablesToLeave = new HashMap<>();
+		this.fileSystem = fileSystem;
+		this.window = window;
+		wasVisited = true;
+		viewCenter = Vector.ZERO;
+		viewCandidate = null;
+		return true;
+	}
+	
 	/**
 	 * @return (float): camera scale factor, assume it is the same in x and y
 	 *         direction
@@ -56,9 +73,13 @@ public abstract class Area implements Playable {
 		this.areaBehavior = ab;
 	}
 
+	public AreaBehavior getAreaBehavior() {
+		return areaBehavior;
+	}
+
 	public final boolean leaveAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates) {
 		if (areaBehavior.canLeave(entity, coordinates)) {
-			interactablesToLeave.put(entity , coordinates) ;
+			interactablesToLeave.put(entity, coordinates);
 			return true;
 		}
 		return false;
@@ -66,7 +87,7 @@ public abstract class Area implements Playable {
 
 	public final boolean enterAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates) {
 		if (areaBehavior.canEnter(entity, coordinates)) {
-			interactablesToEnter.put(entity , coordinates) ;
+			interactablesToEnter.put(entity, coordinates);
 			return true;
 		}
 		return false;
@@ -163,20 +184,6 @@ public abstract class Area implements Playable {
 		return wasVisited;
 	}
 
-	@Override
-	public boolean begin(Window window, FileSystem fileSystem) {
-		// TODO implements me #PROJECT #TUTO
-		this.registeredActors = new LinkedList<>();
-		this.unregisteredActors = new LinkedList<>();
-		this.fileSystem = fileSystem;
-		this.window = window;
-		wasVisited = true;
-		actors = new LinkedList<>();
-		viewCenter = Vector.ZERO;
-		viewCandidate = null;
-		return true;
-	}
-
 	/**
 	 * Resume method: Can be overridden
 	 * 
@@ -193,7 +200,7 @@ public abstract class Area implements Playable {
 		// TODO implements me #PROJECT #TUTO
 		updateCamera();
 		purgeRegistration();
-		for(Actor actor : actors){
+		for (Actor actor : actors) {
 			actor.update(deltaTime);
 			actor.draw(window);
 		}
@@ -201,20 +208,22 @@ public abstract class Area implements Playable {
 
 	private final void purgeRegistration() {
 		// add newly registered actors to the actors list
-		for(Actor actor : registeredActors){
+		for (Actor actor : registeredActors) {
 			addActor(actor, false);
 		}
 		// remove unwanted actors from the actor list
-		for(Actor actor : unregisteredActors){
+		for (Actor actor : unregisteredActors) {
 			removeActor(actor, false);
 		}
-		
-		for(Interactable i : interactablesToEnter.keySet()) {
-			areaBehavior.enter(i, interactablesToEnter.get(i));;
+
+		for (Interactable i : interactablesToEnter.keySet()) {
+			areaBehavior.enter(i, interactablesToEnter.get(i));
+			;
 		}
-		
-		for(Interactable i : interactablesToLeave.keySet()) {
-			areaBehavior.enter(i, interactablesToLeave.get(i));;
+
+		for (Interactable i : interactablesToLeave.keySet()) {
+			areaBehavior.enter(i, interactablesToLeave.get(i));
+			;
 		}
 		// once updated actors, clears lists
 		registeredActors.clear();
@@ -251,4 +260,7 @@ public abstract class Area implements Playable {
 		// TODO save the AreaState somewhere
 	}
 
+	public Window getWindow() {
+		return window;
+	}
 }

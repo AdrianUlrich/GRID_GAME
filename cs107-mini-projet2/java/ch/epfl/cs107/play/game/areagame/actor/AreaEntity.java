@@ -8,65 +8,69 @@ import ch.epfl.cs107.play.game.actor.Entity;
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
-
 /**
  * Actors leaving in a grid
  */
-public abstract class AreaEntity extends Entity implements Interactable{
+public abstract class AreaEntity extends Entity implements Interactable {
 
-    // TODO implements me #PROJECT #TUTO
+	// TODO implements me #PROJECT #TUTO
 	/// an AreaEntity knows its own Area
-	private Area ownerArea ;
+	private Area ownerArea;
 	/// Orientation of the AreaEntity in the Area
-	private Orientation orientation ;
+	private Orientation orientation;
 	/// Coordinate of the main Cell linked to the entity
-	private DiscreteCoordinates currentMainCellCoordinates ;
+	private DiscreteCoordinates currentMainCellCoordinates;
 
-    /**
-     * Default AreaEntity constructor
-     * @param area (Area): Owner area. Not null	
-     * @param orientation (Orientation): Initial orientation of the entity in the Area. Not null
-     * @param position (DiscreteCoordinate): Initial position of the entity in the Area. Not null
-     */
-	
-	
-    public AreaEntity(Area area, Orientation orientation, DiscreteCoordinates position) {
+	/**
+	 * Default AreaEntity constructor
+	 * 
+	 * @param area        (Area): Owner area. Not null
+	 * @param orientation (Orientation): Initial orientation of the entity in the
+	 *                    Area. Not null
+	 * @param position    (DiscreteCoordinate): Initial position of the entity in
+	 *                    the Area. Not null
+	 */
 
-        super(position.toVector());
-        // TODO implements me #PROJECT #TUTO
-    }
+	public AreaEntity(Area area, Orientation orientation, DiscreteCoordinates position) {
 
+		super(position.toVector());
+		// TODO implements me #PROJECT #TUTO
+	}
 
-    /**
-     * Getter for the coordinates of the main cell occupied by the AreaEntity
-     * @return (DiscreteCoordinates)
-     */
-    protected DiscreteCoordinates getCurrentMainCellCoordinates(){
-        // TODO implements me #PROJECT #TUTO
-        return currentMainCellCoordinates;
-    }
+	/**
+	 * Getter for the coordinates of the main cell occupied by the AreaEntity
+	 * 
+	 * @return (DiscreteCoordinates)
+	 */
+	protected DiscreteCoordinates getCurrentMainCellCoordinates() {
+		// TODO implements me #PROJECT #TUTO
+		return currentMainCellCoordinates;
+	}
 
-    @Override
-    protected void setCurrentPosition(Vector v) {
-    	if(DiscreteCoordinates.isCoordinates(v)) {
-    		v = v.round();
-    		DiscreteCoordinates newPosition = new DiscreteCoordinates((int)v.getX(),(int)v.getY());
-    		currentMainCellCoordinates = newPosition;
-    	}
-    	else {
-    		super.setCurrentPosition(v);
-    	}
-    }
-    
-    protected void setOrientation(Orientation orientation){
-    	this.orientation = orientation;
-    }
-    
-    protected Orientation getOrientation(){
-    	return orientation;
-    }
-    
-    protected Area getOwnerArea() {
-    	return ownerArea;
-    }
+	@Override
+	protected void setCurrentPosition(Vector v) {
+		if (DiscreteCoordinates.isCoordinates(v)) {
+			v = v.round();
+			DiscreteCoordinates newPosition = new DiscreteCoordinates((int) v.getX(), (int) v.getY());
+			currentMainCellCoordinates = newPosition;
+		} else {
+			super.setCurrentPosition(v);
+		}
+	}
+
+	protected void setOrientation(Orientation orientation) {
+		this.orientation = orientation;
+	}
+
+	protected Orientation getOrientation() {
+		return orientation;
+	}
+
+	protected Area getOwnerArea() {
+		return ownerArea;
+	}
+
+	protected void setOwnerArea(Area area) {
+		this.ownerArea = area;
+	}
 }

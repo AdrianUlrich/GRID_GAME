@@ -67,6 +67,12 @@ abstract public class AreaGame implements Game {
 		return null;
 
 	}
+	protected Area getArea(String room) {
+		return areas.get(room);
+	}
+	protected Area getCurrentArea() {
+		return currentArea;
+	}
 
 	/** @return (Window) : the Graphic and Audio context */
 	protected final Window getWindow() {

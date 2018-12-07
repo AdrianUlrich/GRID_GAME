@@ -8,11 +8,9 @@ public class Demo2Behavior extends AreaBehavior {
 
 	public Demo2Behavior(Window window, String fileName) {
 		super(window, fileName);
-		for (int x= 0; x < getWidth(); ++x) {
-			for (int y = 0; y < getHeight(); ++y) {
-				Demo2CellType cellType = Demo2CellType.toType(getBehaviorMap().getRGB(getHeight() -1-y,x)) ;
-				Cell cell = new Demo2Cell(x,y,cellType);
-				setCell(x,y,cell);
+		for (int x= 0; x < getCells().length; ++x) {
+			for (int y = 0; y < getCells()[x].length; ++y) {
+				getCells()[x][y] = new Demo2Cell(x,y,Demo2CellType.toType(getBehaviorMap().getRGB(getHeight()-1-y, x)));
 			}
 		}
 		// TODO Auto-generated constructor stub
@@ -21,6 +19,11 @@ public class Demo2Behavior extends AreaBehavior {
 	public int getCameraScaleFactor() {
 		return 10;
 	}
+	
+	public Demo2CellType getType(int x, int y) {
+		Demo2Cell cell = (Demo2Cell) getCell(x,y);
+		return cell.cellType;
+	} 
 
 	public enum Demo2CellType {
 		NULL(0), WALL(-16777216), // RGB code of black
@@ -62,6 +65,7 @@ public class Demo2Behavior extends AreaBehavior {
 			super(x, y);
 			cellType = type;
 		}
+		
 		@Override
 		public boolean takeCellSpace() {
 			// TODO Auto-generated method stub
