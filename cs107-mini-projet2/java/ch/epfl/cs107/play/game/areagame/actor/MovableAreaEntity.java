@@ -16,7 +16,6 @@ import ch.epfl.cs107.play.math.Vector;
  */
 public abstract class MovableAreaEntity extends AreaEntity {
 
-	// TODO implements me #PROJECT #TUTO
 	/// Indicate if the actor is currently moving
 	private boolean isMoving;
 	/// Indicate how many frames the current move is supposed to take
@@ -34,14 +33,12 @@ public abstract class MovableAreaEntity extends AreaEntity {
 	public MovableAreaEntity(Area area, Orientation orientation, DiscreteCoordinates position) {
 		super(area, orientation, position);
 		resetMotion();
-		// TODO implements me #PROJECT #TUTO
 	}
 
 	/**
 	 * Initialize or reset the current motion information
 	 */
 	protected void resetMotion() {
-		// TODO implements me #PROJECT #TUTO
 		isMoving = false;
 		framesForCurrentMove = 0;
 		targetMainCellCoordinates = getCurrentMainCellCoordinates();
@@ -54,15 +51,14 @@ public abstract class MovableAreaEntity extends AreaEntity {
 	 */
 
 	protected boolean move(int framesForMove) {
-		// TODO implements me #PROJECT #TUTO
 		if (isMoving == false || getCurrentCells().get(0) != targetMainCellCoordinates) {
 			if (getOwnerArea().enterAreaCells(this, getEnteringCells())
 					&& getOwnerArea().leaveAreaCells(this, getLeavingCells())) {
-				boolean canLeaveCell = true;
-				boolean canEnterCell = true;
-				if (canLeaveCell == false || canEnterCell == false) {
-					return false;
-				} else {
+//				boolean canLeaveCell = true;
+//				boolean canEnterCell = true;
+//				if (canLeaveCell == false || canEnterCell == false) {
+//					return false;
+//				} else {
 					framesForCurrentMove = framesForMove;
 					if (framesForCurrentMove < 1) {
 						framesForCurrentMove = 1;
@@ -71,7 +67,8 @@ public abstract class MovableAreaEntity extends AreaEntity {
 					targetMainCellCoordinates = getCurrentMainCellCoordinates().jump(orientation);
 					isMoving = true;
 					return true;
-				}
+					// TODO add area conditions here
+//				}
 			}
 		}
 		return false;
@@ -81,7 +78,6 @@ public abstract class MovableAreaEntity extends AreaEntity {
 
 	@Override
 	public void update(float deltaTime) {
-		// TODO implements me #PROJECT #TUTO
 		if (isMoving == true && getCurrentCells().get(0) != targetMainCellCoordinates) {
 			Vector distance = getOrientation().toVector();
 			distance = distance.mul(1.0f / framesForCurrentMove);
@@ -122,4 +118,12 @@ public abstract class MovableAreaEntity extends AreaEntity {
 		}
 		return investedCells;
 	}
+
+	@Override
+	protected void setOrientation(Orientation orientation) {
+	    if (!isMoving)
+	    super.setOrientation(orientation);
+	}
+	
+	
 }

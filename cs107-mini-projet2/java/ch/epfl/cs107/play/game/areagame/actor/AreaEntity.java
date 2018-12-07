@@ -32,20 +32,20 @@ public abstract class AreaEntity extends Entity implements Interactable {
 	 */
 
 	public AreaEntity(Area area, Orientation orientation, DiscreteCoordinates position) {
+        this.orientation = orientation;
+        this.currentMainCellCoordinates = position;
 
 		super(position.toVector());
 		// TODO implements me #PROJECT #TUTO
 	}
 
-	/**
-	 * Getter for the coordinates of the main cell occupied by the AreaEntity
-	 * 
-	 * @return (DiscreteCoordinates)
-	 */
-	protected DiscreteCoordinates getCurrentMainCellCoordinates() {
-		// TODO implements me #PROJECT #TUTO
-		return currentMainCellCoordinates;
-	}
+    /**
+     * Getter for the coordinates of the main cell occupied by the AreaEntity
+     * @return (DiscreteCoordinates)
+     */
+    protected DiscreteCoordinates getCurrentMainCellCoordinates(){
+        return currentMainCellCoordinates;
+    }
 
 	@Override
 	protected void setCurrentPosition(Vector v) {
