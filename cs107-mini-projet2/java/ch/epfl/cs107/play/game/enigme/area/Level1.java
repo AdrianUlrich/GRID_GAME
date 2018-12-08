@@ -1,11 +1,10 @@
-package ch.epfl.cs107.play.game.enigme.area.demo2;
+package ch.epfl.cs107.play.game.enigme.area;
 
-import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
-public class Room1 extends Demo2Area{
+public class Level1 extends EnigmeArea{
 	
-	public Room1(){
+	public Level1(){
 		super("Level1");
 	}
 	

@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.epfl.cs107.play.game.areagame.Area;
+import ch.epfl.cs107.play.game.areagame.actor.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.areagame.actor.MovableAreaEntity;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -140,4 +141,10 @@ public class Demo2Player extends MovableAreaEntity {
 	}
 	return super.move(framesForMove);
     }
+
+	@Override
+	public void acceptInteraction(AreaInteractionVisitor v) {
+		// TODO Auto-generated method stub
+		
+	}
 }

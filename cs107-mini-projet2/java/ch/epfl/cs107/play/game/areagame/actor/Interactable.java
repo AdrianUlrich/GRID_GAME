@@ -2,6 +2,7 @@ package ch.epfl.cs107.play.game.areagame.actor;
 
 import java.util.List;
 
+import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 import java.util.HashSet;
@@ -20,4 +21,6 @@ public interface Interactable {
 	boolean isViewInteractable();
 	
 	boolean isCellInteractable();
+	
+	void acceptInteraction(AreaInteractionVisitor v) ;
 }

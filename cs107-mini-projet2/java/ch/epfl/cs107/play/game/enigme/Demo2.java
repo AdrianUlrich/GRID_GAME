@@ -25,7 +25,7 @@ import javafx.scene.text.TextAlignment;
 public class Demo2 extends AreaGame {
 
     private Demo2Player player;
-    private TextGraphics playerDebugIndicator; //DEBUG
+//    private TextGraphics playerDebugIndicator; //DEBUG
 
     @Override
     public int getFrameRate() {
@@ -44,9 +44,9 @@ public class Demo2 extends AreaGame {
 	addArea(new Room1());
 	setCurrentArea("LevelSelector", false);
 	player = new Demo2Player(getCurrentArea(), (new DiscreteCoordinates(5, 5)));
-	playerDebugIndicator = new TextGraphics("O", .3f, null, Color.GREEN, .15f, true, false, new Vector(.5f, .5f), // DEBUG
-		TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE, .7f, .0f); // DEBUG
-	playerDebugIndicator.setParent(player); //DEBUG
+//	playerDebugIndicator = new TextGraphics("O", .3f, null, Color.GREEN, .15f, true, false, new Vector(.5f, .5f), // DEBUG
+//		TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE, .7f, .0f); // DEBUG
+//	playerDebugIndicator.setParent(player); //DEBUG
 	getCurrentArea().setViewCandidate(player);
 	getCurrentArea().registerActor(player);
 	return true;
@@ -54,10 +54,10 @@ public class Demo2 extends AreaGame {
 
     @Override
     public void update(float deltaTime) {
-	playerDebugIndicator.setOutlineColor(player.isPassingDoor()?Color.CYAN:Color.GREEN); // DEBUG
-	playerDebugIndicator.setAnchor((new Vector(.5f, .5f)) // DEBUG
-		.add(player.isMoving()?player.getOrientationVector():Vector.ZERO)); // DEBUG
-	playerDebugIndicator.draw(getWindow()); // DEBUG
+//	playerDebugIndicator.setOutlineColor(player.isPassingDoor()?Color.CYAN:Color.GREEN); // DEBUG
+//	playerDebugIndicator.setAnchor((new Vector(.5f, .5f)) // DEBUG
+//		.add(player.isMoving()?player.getOrientationVector():Vector.ZERO)); // DEBUG
+//	playerDebugIndicator.draw(getWindow()); // DEBUG
 	if (player.isPassingDoor() && !player.isMoving()) {
 	    if (getCurrentArea().getTitle() == "Level1") {
 		setCurrentArea("LevelSelector", false);
