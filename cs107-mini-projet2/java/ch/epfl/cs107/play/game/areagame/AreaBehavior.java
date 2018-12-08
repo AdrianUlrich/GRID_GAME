@@ -24,6 +24,8 @@ public abstract class AreaBehavior {
 	/// We will convert the image into an array of cells
 	private final Cell[][] cells;
 	
+	private DiscreteCoordinates entrance;
+	
 	/**
 	 * Default AreaBehavior Constructor
 	 * 
@@ -64,7 +66,6 @@ public abstract class AreaBehavior {
 	}
 
 	protected void enter(Interactable entity, List<DiscreteCoordinates> coordinates) {
-
 		for (DiscreteCoordinates coordinate : coordinates) {
 			cells[coordinate.x][coordinate.y].enter(entity);
 		}

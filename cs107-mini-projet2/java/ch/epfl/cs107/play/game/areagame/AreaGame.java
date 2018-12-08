@@ -9,7 +9,7 @@ import ch.epfl.cs107.play.game.Game;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.window.Window;
 
-/**
+/** 
  * AreaGame is a type of Game displayed in a (MxN) Grid called Area An AreaGame
  * has multiple Areas
  */
@@ -53,7 +53,7 @@ abstract public class AreaGame implements Game {
 		currentArea = areas.get(key);
 
 		if (currentArea != null) {
-			if (forceBegin == true || currentArea.getVisited()==false) {
+			if (forceBegin == true || currentArea.wasVisited()==false) {
 				currentArea.begin(window, fileSystem);
 			} else {
 				currentArea.resume(window, fileSystem);
@@ -76,14 +76,12 @@ abstract public class AreaGame implements Game {
 
 	/** @return (Window) : the Graphic and Audio context */
 	protected final Window getWindow() {
-		// TODO implements me #PROJECT #TUTO
-		return null;
+		return window;
 	}
 
 	/** @return (FIleSystem): the linked file system */
 	protected final FileSystem getFileSystem() {
-		// TODO implements me #PROJECT #TUTO
-		return null;
+		return fileSystem;
 	}
 
 	/// AreaGame implements Playable

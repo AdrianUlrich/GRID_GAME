@@ -49,17 +49,16 @@ public abstract class Area implements Playable {
 	
 	@Override
 	public boolean begin(Window window, FileSystem fileSystem) {
-		// TODO implements me #PROJECT #TUTO
+		this.window = window;
+		this.fileSystem = fileSystem;
 		this.actors = new LinkedList<>();
 		this.registeredActors = new LinkedList<>();
 		this.unregisteredActors = new LinkedList<>();
 		this.interactablesToEnter = new HashMap<>();
 		this.interactablesToLeave = new HashMap<>();
-		this.fileSystem = fileSystem;
-		this.window = window;
-		wasVisited = true;
-		viewCenter = Vector.ZERO;
 		viewCandidate = null;
+		viewCenter = Vector.ZERO;
+		wasVisited = true;
 		return true;
 	}
 	
@@ -170,17 +169,15 @@ public abstract class Area implements Playable {
 	 * @return (int) : the height in number of rows
 	 */
 	public final int getHeight() {
-		// TODO implements me #PROJECT #TUTO
 		return areaBehavior.getHeight();
 	}
 
 	/** @return the Window Keyboard for inputs */
 	public final Keyboard getKeyboard() {
-		// TODO implements me #PROJECT #TUTO
-		return null;
+		return getWindow().getKeyboard();
 	}
 
-	public final boolean getVisited() {
+	public final boolean wasVisited() {
 		return wasVisited;
 	}
 
@@ -218,13 +215,12 @@ public abstract class Area implements Playable {
 
 		for (Interactable i : interactablesToEnter.keySet()) {
 			areaBehavior.enter(i, interactablesToEnter.get(i));
-			;
 		}
 
 		for (Interactable i : interactablesToLeave.keySet()) {
-			areaBehavior.enter(i, interactablesToLeave.get(i));
-			;
+			areaBehavior.leave(i, interactablesToLeave.get(i));
 		}
+		
 		// once updated actors, clears lists
 		registeredActors.clear();
 		unregisteredActors.clear();
@@ -233,12 +229,10 @@ public abstract class Area implements Playable {
 	}
 
 	private void updateCamera() {
-		// TODO implements me #PROJECT #TUTO
 		if (viewCandidate != null) {
 			viewCenter = viewCandidate.getPosition();
 		}
 		// Compute new viewport
-		// TODO find the right scale factor
 		Transform viewTransform = Transform.I.scaled(getCameraScaleFactor()).translated(viewCenter);
 		window.setRelativeTransform(viewTransform);
 	}
@@ -263,4 +257,6 @@ public abstract class Area implements Playable {
 	public Window getWindow() {
 		return window;
 	}
+
+	public abstract DiscreteCoordinates getEntrance();
 }

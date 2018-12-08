@@ -16,50 +16,59 @@ import ch.epfl.cs107.play.game.enigme.area.demo2.Room0;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.Circle;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.TextAlign;
+import ch.epfl.cs107.play.math.Transform;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Window;
+import javafx.scene.text.TextAlignment;
 
 public class Demo2 extends AreaGame {
 
-	Demo2Player player = new Demo2Player(getCurrentArea(), (new DiscreteCoordinates(5, 5)));
+    private Demo2Player player;
+    private TextGraphics playerDebugIndicator; //DEBUG
 
-	@Override
-	public int getFrameRate() {
-		// TODO Auto-generated method stub
-		return 24;
-	}
+    @Override
+    public int getFrameRate() {
+	return 24;
+    }
 
-	@Override
-	public String getTitle() {
-		// TODO Auto-generated method stub
-		return "Demo2";
-	}
+    @Override
+    public String getTitle() {
+	return "Demo2";
+    }
 
-	@Override
-	public boolean begin(Window window, FileSystem fileSystem) {
-		// TODO Auto-generated method stubs
-		super.begin(window, fileSystem);
-		addArea(new Room0());
-		addArea(new Room1());
+    @Override
+    public boolean begin(Window window, FileSystem fileSystem) {
+	super.begin(window, fileSystem);
+	addArea(new Room0());
+	addArea(new Room1());
+	setCurrentArea("LevelSelector", false);
+	player = new Demo2Player(getCurrentArea(), (new DiscreteCoordinates(5, 5)));
+	playerDebugIndicator = new TextGraphics("O", .3f, null, Color.GREEN, .15f, true, false, new Vector(.5f, .5f), // DEBUG
+		TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE, .7f, .0f); // DEBUG
+	playerDebugIndicator.setParent(player); //DEBUG
+	getCurrentArea().setViewCandidate(player);
+	getCurrentArea().registerActor(player);
+	return true;
+    }
+
+    @Override
+    public void update(float deltaTime) {
+	playerDebugIndicator.setOutlineColor(player.isPassingDoor()?Color.CYAN:Color.GREEN); // DEBUG
+	playerDebugIndicator.setAnchor((new Vector(.5f, .5f)) // DEBUG
+		.add(player.isMoving()?player.getOrientationVector():Vector.ZERO)); // DEBUG
+	playerDebugIndicator.draw(getWindow()); // DEBUG
+	if (player.isPassingDoor() && !player.isMoving()) {
+	    if (getCurrentArea().getTitle() == "Level1") {
 		setCurrentArea("LevelSelector", false);
-		getCurrentArea().setViewCandidate(player);
-		getCurrentArea().registerActor(player);
-		return true;
+	    } else {
+		setCurrentArea("Level1", false);
+	    }
+	    player.leaveArea();
+	    player.enterArea(getCurrentArea());
+	    player.isPassingDoor(false);
 	}
-
-	@Override
-	public void update(float deltaTime) {
-		if (player.isPassingDoor) {
-			if (getCurrentArea() == new Demo2Area("Room1")) {
-				player.leaveArea();
-				player.enterArea(getArea("Room0"), new DiscreteCoordinates(5, 5));
-			} else {
-				player.leaveArea();
-				player.enterArea(getArea("Room1"), new DiscreteCoordinates(5, 2));
-			}
-		}
-		super.update(deltaTime);
-		// TODO implements me #PROJECT #TUTO
-	}
+	super.update(deltaTime);
+    }
 
 }
