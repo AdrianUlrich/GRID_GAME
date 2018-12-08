@@ -122,7 +122,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 		}
 		if (getOrientation() == Orientation.RIGHT) {
 			for (DiscreteCoordinates coords : getCurrentCells()) {
-				fieldOfView.add(new DiscreteCoordinates(coords.x + 1, coords.y - 1));
+				fieldOfView.add(new DiscreteCoordinates(coords.x + 1, coords.y));
 			}
 		}
 		return fieldOfView;
