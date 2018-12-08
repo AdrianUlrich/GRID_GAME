@@ -10,8 +10,6 @@ import ch.epfl.cs107.play.math.Transform;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
-import ch.epfl.cs107.play.game.areagame.actor.Interactable;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -69,6 +67,9 @@ public abstract class Area implements Playable {
 	 * @return (float): camera scale factor, assume it is the same in x and y
 	 *         direction
 	 */
+	protected FileSystem getFileSystem() {
+		return fileSystem;
+	}
 	public abstract float getCameraScaleFactor();
 
 	final protected void setBehavior(AreaBehavior ab) {
@@ -212,12 +213,11 @@ public abstract class Area implements Playable {
 		}
 		for (Interactor interactor : interactors) {
 			if (interactor.wantsCellInteraction()) {
-				// demander au gestionnaire de la grille (AreaBehavior)
-				// de mettre en place les interactions de contact
+				areaBehavior.cellInteractionOf(interactor);
 			}
 			if (interactor.wantsViewInteraction()) {
-				// demander au gestionnaire de la grille de mettre en place
-				// les interactions distantes
+				areaBehavior.viewInteractionOf(interactor);
+				interactor.SetWantsViewInteraction(false);
 			}
 		}
 	}

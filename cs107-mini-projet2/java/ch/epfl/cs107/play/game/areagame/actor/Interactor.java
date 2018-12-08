@@ -17,5 +17,6 @@ public interface Interactor {
 	boolean wantsCellInteraction();
 	boolean wantsViewInteraction();
 	void interactWith(Interactable interactable);
+	void SetWantsViewInteraction(boolean b);
 
 }

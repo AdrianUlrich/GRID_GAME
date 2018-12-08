@@ -141,10 +141,4 @@ public class Demo2Player extends MovableAreaEntity {
 	}
 	return super.move(framesForMove);
     }
-
-	@Override
-	public void acceptInteraction(AreaInteractionVisitor v) {
-		// TODO Auto-generated method stub
-		
-	}
 }

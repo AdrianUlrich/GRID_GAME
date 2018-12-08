@@ -1,9 +1,12 @@
 package ch.epfl.cs107.play.game.enigme.actor;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import ch.epfl.cs107.play.game.areagame.Area;
+import ch.epfl.cs107.play.game.areagame.actor.Interactable;
+import ch.epfl.cs107.play.game.areagame.actor.Interactor;
 import ch.epfl.cs107.play.game.areagame.actor.MovableAreaEntity;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -12,18 +15,22 @@ import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
+import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 
-public class EnigmePlayer extends MovableAreaEntity {
-	
+public class EnigmePlayer extends MovableAreaEntity implements Interactor {
+
 	private Door passedDoor;
 	private boolean isPassingDoor;
 	private final static int ANIMATION_DURATION = 8;
 	private final Sprite sprite;
+	private boolean wantsViewInteraction;
 
 	public EnigmePlayer(Area area, Orientation orientation, DiscreteCoordinates position) {
 		super(area, orientation, position);
 		isPassingDoor = false;
 		sprite = new Sprite("ghost.1", 1, 1.f, this);
+		wantsViewInteraction = false;
 	}
 
 	public EnigmePlayer(Area area, DiscreteCoordinates position) {
@@ -39,7 +46,7 @@ public class EnigmePlayer extends MovableAreaEntity {
 	}
 
 	public void enterArea(Area area) {
-		enterArea(area, area.getEntrance());
+		enterArea(area, passedDoor.goesToCoord());
 	}
 
 	public void leaveArea() {
@@ -49,16 +56,16 @@ public class EnigmePlayer extends MovableAreaEntity {
 	public boolean isPassingDoor(boolean isPassingDoor) {
 		return this.isPassingDoor = isPassingDoor;
 	}
-	
+
 	void setIsPassingDoor(Door door) {
 		isPassingDoor = true;
 		passedDoor = door;
 	}
-	
+
 	public boolean isPassingDoor() {
 		return isPassingDoor;
 	}
-	
+
 	public Door passedDoor() {
 		return passedDoor;
 	}
@@ -96,12 +103,62 @@ public class EnigmePlayer extends MovableAreaEntity {
 	}
 
 	@Override
+	public List<DiscreteCoordinates> getFieldOfViewCells() {
+		LinkedList<DiscreteCoordinates> fieldOfView = new LinkedList<>();
+		if (getOrientation() == Orientation.DOWN) {
+			for (DiscreteCoordinates coords : getCurrentCells()) {
+				fieldOfView.add(new DiscreteCoordinates(coords.x, coords.y - 1));
+			}
+		}
+		if (getOrientation() == Orientation.UP) {
+			for (DiscreteCoordinates coords : getCurrentCells()) {
+				fieldOfView.add(new DiscreteCoordinates(coords.x, coords.y + 1));
+			}
+		}
+		if (getOrientation() == Orientation.LEFT) {
+			for (DiscreteCoordinates coords : getCurrentCells()) {
+				fieldOfView.add(new DiscreteCoordinates(coords.x - 1, coords.y));
+			}
+		}
+		if (getOrientation() == Orientation.RIGHT) {
+			for (DiscreteCoordinates coords : getCurrentCells()) {
+				fieldOfView.add(new DiscreteCoordinates(coords.x + 1, coords.y - 1));
+			}
+		}
+		return fieldOfView;
+	}
+
+	@Override
+	public boolean wantsCellInteraction() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean wantsViewInteraction() {
+		// TODO Auto-generated method stub
+		return wantsViewInteraction;
+	}
+
+	@Override
+	public void SetWantsViewInteraction(boolean b) {
+		wantsViewInteraction = b;
+	}
+
+	@Override
+	public void interactWith(Interactable interactable) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	public void update(float deltaTime) {
 		Keyboard keyboard = getOwnerArea().getWindow().getKeyboard();
 		Button leftArrow = keyboard.get(Keyboard.LEFT);
 		Button rightArrow = keyboard.get(Keyboard.RIGHT);
 		Button downArrow = keyboard.get(Keyboard.DOWN);
 		Button upArrow = keyboard.get(Keyboard.UP);
+		Button lKey = keyboard.get(Keyboard.L);
 
 		if (leftArrow.isDown()) {
 			if (getOrientation() == Orientation.LEFT) {
@@ -134,6 +191,29 @@ public class EnigmePlayer extends MovableAreaEntity {
 				setOrientation(Orientation.UP);
 			}
 		}
+
+		if (lKey.isDown()) {
+			wantsViewInteraction = true;
+		}
 		super.update(deltaTime);
 	}
+
+	@Override
+	public void acceptInteraction(AreaInteractionVisitor v) {
+		// TODO Auto-generated method stub
+
+		class EnigmePlayerHandler implements EnigmeInteractionVisitor {
+			@Override
+			public void interactWith(Door door) {
+				setIsPassingDoor(door);
+			}
+
+			@Override
+			public void interactWith(Collectable collectable) {
+				getOwnerArea().unregisterActor(collectable);
+				collectable.setIsCollected(true);
+			}
+		}
+	}
+
 }

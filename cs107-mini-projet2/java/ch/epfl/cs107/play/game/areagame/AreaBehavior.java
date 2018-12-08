@@ -1,6 +1,5 @@
 package ch.epfl.cs107.play.game.areagame;
 
-import ch.epfl.cs107.play.game.actor.Actor;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Interactor;
 import ch.epfl.cs107.play.game.areagame.io.ResourcePath;
@@ -123,7 +122,7 @@ public abstract class AreaBehavior {
 		}
 
 		private void cellInteractionOf(Interactor interactor) {
-			for (Interactable interactable : entities) {
+			for (Interactable interactable : interactableActors) {
 				if (interactable.isCellInteractable()) {
 					interactor.interactWith(interactable);
 				}
@@ -131,7 +130,7 @@ public abstract class AreaBehavior {
 		}
 
 		private void viewInteractionOf(Interactor interactor) {
-			for (Interactable interactable : entities) {
+			for (Interactable interactable : interactableActors) {
 				if (interactable.isViewInteractable()) {
 					interactor.interactWith(interactable);
 				}

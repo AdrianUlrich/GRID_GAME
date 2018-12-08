@@ -1,26 +1,12 @@
 package ch.epfl.cs107.play.game.enigme;
 
-import java.awt.Color;
-
-import ch.epfl.cs107.play.game.Game;
-import ch.epfl.cs107.play.game.actor.GraphicsEntity;
-import ch.epfl.cs107.play.game.actor.ShapeGraphics;
-import ch.epfl.cs107.play.game.actor.TextGraphics;
-import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.AreaGame;
-import ch.epfl.cs107.play.game.demo1.actor.MovingRock;
 import ch.epfl.cs107.play.game.enigme.area.demo2.Room1;
 import ch.epfl.cs107.play.game.enigme.actor.demo2.Demo2Player;
-import ch.epfl.cs107.play.game.enigme.area.demo2.Demo2Area;
 import ch.epfl.cs107.play.game.enigme.area.demo2.Room0;
 import ch.epfl.cs107.play.io.FileSystem;
-import ch.epfl.cs107.play.math.Circle;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.math.TextAlign;
-import ch.epfl.cs107.play.math.Transform;
-import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Window;
-import javafx.scene.text.TextAlignment;
 
 public class Demo2 extends AreaGame {
 
