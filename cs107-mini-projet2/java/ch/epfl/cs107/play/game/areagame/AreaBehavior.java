@@ -146,6 +146,15 @@ public abstract class AreaBehavior {
 	private void leave(Interactable i) {
 	    interactables.remove(i);
 	}
+	
+	public boolean isOccupied() {
+	    for (Interactable interactable : interactables) {
+		if (interactable.takeCellSpace()) {
+		    return true;
+		}
+	    }
+	    return false;
+	}
 
 	protected abstract boolean canEnter(Interactable entity);
 

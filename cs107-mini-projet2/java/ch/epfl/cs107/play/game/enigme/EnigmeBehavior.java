@@ -92,7 +92,7 @@ public class EnigmeBehavior extends AreaBehavior {
 	    if (this.cellType == EnigmeCellType.NULL || this.cellType == EnigmeCellType.WALL) {
 		return false;
 	    }
-	    return true;
+	    return !isOccupied();
 	}
 
 	@Override

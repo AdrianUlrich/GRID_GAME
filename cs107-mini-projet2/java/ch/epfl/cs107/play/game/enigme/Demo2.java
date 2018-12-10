@@ -53,6 +53,7 @@ public class Demo2 extends AreaGame {
 	    player.leaveArea();
 	    player.enterArea(getCurrentArea());
 	    player.isPassingDoor(false);
+	    getCurrentArea().setViewCandidate(player);
 	}
 	super.update(deltaTime);
     }
