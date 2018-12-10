@@ -30,7 +30,6 @@ abstract public class AreaGame implements Game {
 	 * @param a (Area): The area to add, not null
 	 */
 	protected final void addArea(Area a) {
-		// TODO implements me #PROJECT #TUTO
 		areas.put(a.getTitle(), a);
 	}
 
@@ -45,7 +44,6 @@ abstract public class AreaGame implements Game {
 	 * @return (Area): after setting it, return the new current area
 	 */
 	protected final Area setCurrentArea(String key, boolean forceBegin) {
-		// TODO implements me #PROJECT #TUTO
 		Area oldArea = currentArea;
 		if (currentArea != null) {
 			currentArea.suspend();
@@ -88,7 +86,6 @@ abstract public class AreaGame implements Game {
 
 	@Override
 	public boolean begin(Window window, FileSystem fileSystem) {
-		// TODO implements me #PROJECT #TUTO
 		this.fileSystem = fileSystem;
 		this.window = window;
 		areas = new HashMap<>();
@@ -98,7 +95,6 @@ abstract public class AreaGame implements Game {
 	@Override
 	public void update(float deltaTime) {
 		currentArea.update(deltaTime);
-		// TODO implements me #PROJECT #TUTO
 	}
 
 	@Override

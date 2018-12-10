@@ -2,6 +2,7 @@ package ch.epfl.cs107.play.game.areagame.actor;
 
 import ch.epfl.cs107.play.game.actor.Entity;
 import ch.epfl.cs107.play.game.areagame.Area;
+import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.game.actor.Entity;
@@ -51,8 +52,7 @@ public abstract class AreaEntity extends Entity implements Interactable {
     protected void setCurrentPosition(Vector v) {
 	if (DiscreteCoordinates.isCoordinates(v)) {
 	    v = v.round();
-	    DiscreteCoordinates newPosition = new DiscreteCoordinates((int) v.getX(), (int) v.getY());
-	    currentMainCellCoordinates = newPosition;
+	    currentMainCellCoordinates = new DiscreteCoordinates((int) v.getX(), (int) v.getY());
 	    super.setCurrentPosition(v);
 	} else {
 	    super.setCurrentPosition(v);
@@ -74,4 +74,9 @@ public abstract class AreaEntity extends Entity implements Interactable {
     protected void setOwnerArea(Area area) {
 	this.ownerArea = area;
     }
+
+    @Override
+    public void acceptInteraction(AreaInteractionVisitor v) {
+	// by default do nothing
+    }   
 }

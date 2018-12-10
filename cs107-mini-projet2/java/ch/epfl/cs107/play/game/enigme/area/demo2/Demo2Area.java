@@ -30,7 +30,6 @@ public abstract class Demo2Area extends Area {
 	
 	@Override
 	public float getCameraScaleFactor() {
-		// TODO Auto-generated method stub
 		return 25;
 	}
 

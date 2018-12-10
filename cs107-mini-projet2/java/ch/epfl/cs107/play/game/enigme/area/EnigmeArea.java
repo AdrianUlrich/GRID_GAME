@@ -20,16 +20,15 @@ public abstract class EnigmeArea extends Area {
 	}
 	
 	public boolean begin(Window window, FileSystem fileSystem) {
-		super.begin(window, fileSystem);
+		boolean supSuccess = super.begin(window, fileSystem);
 		setBehavior(new EnigmeBehavior(window , getTitle()));
 		registerActor(new Background(this));
 
-		return true;
+		return supSuccess;
 	}
 	
 	@Override
 	public float getCameraScaleFactor() {
-		// TODO Auto-generated method stub
 		return 25;
 	}
 
