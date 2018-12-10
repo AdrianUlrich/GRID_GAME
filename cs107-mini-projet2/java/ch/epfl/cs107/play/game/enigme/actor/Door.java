@@ -2,6 +2,7 @@ package ch.epfl.cs107.play.game.enigme.actor;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import ch.epfl.cs107.play.game.areagame.Area;
@@ -16,12 +17,17 @@ public class Door extends AreaEntity {
 
     private String goesTo;
     private DiscreteCoordinates goesToCoord;
+    private List<DiscreteCoordinates> otherCells;
 
     public Door(Area area, String destination, DiscreteCoordinates destinationCoords, Orientation orientation,
-	    DiscreteCoordinates position) {
+	    DiscreteCoordinates position, DiscreteCoordinates ... otherCells) {
 	super(area, orientation, position);
 	goesTo = destination;
 	goesToCoord = destinationCoords;
+	this.otherCells = new LinkedList<DiscreteCoordinates>();
+	for (DiscreteCoordinates cell : otherCells) {
+	    this.otherCells.add(cell);
+	}
     }
 
     public String goesTo() {

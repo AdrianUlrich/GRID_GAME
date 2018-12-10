@@ -45,11 +45,12 @@ public class Enigme extends AreaGame {
     @Override
     public void update(float deltaTime) {
 	if (player.isPassingDoor()) {
-	    setCurrentArea(player.passedDoor().goesTo(), false);
-	    player.leaveArea();
-	    player.enterArea(getCurrentArea());
-	    player.isPassingDoor(false);
-	    getCurrentArea().setViewCandidate(player);
+	    if (getCurrentArea() != setCurrentArea(player.passedDoor().goesTo(), false)) {
+		player.leaveArea();
+		player.enterArea(getCurrentArea());
+		player.isPassingDoor(false);
+		getCurrentArea().setViewCandidate(player);
+	    }
 	}
 	super.update(deltaTime);
     }

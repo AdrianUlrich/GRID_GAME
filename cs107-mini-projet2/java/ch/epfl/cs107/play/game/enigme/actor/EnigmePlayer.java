@@ -55,11 +55,11 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 	getOwnerArea().unregisterActor(this);
     }
 
-    public boolean isPassingDoor(boolean isPassingDoor) {
-	return this.isPassingDoor = isPassingDoor;
+    public void isPassingDoor(boolean isPassingDoor) {
+	this.isPassingDoor = isPassingDoor;
     }
 
-    void setPassingDoor(Door door) {
+    void setIsPassingDoor(Door door) {
 	isPassingDoor = true;
 	passedDoor = door;
     }
@@ -212,7 +212,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     class EnigmePlayerHandler implements EnigmeInteractionVisitor {
 	@Override
 	public void interactWith(Door door) {
-	    setPassingDoor(door);
+	    setIsPassingDoor(door);
 	}
 
 	@Override

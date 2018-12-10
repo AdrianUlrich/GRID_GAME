@@ -62,7 +62,7 @@ abstract public class AreaGame implements Game {
 				throw new NullPointerException("Fell out of the world");
 			}
 		}
-		return null;
+		return currentArea;
 
 	}
 	protected Area getArea(String room) {
