@@ -19,9 +19,9 @@ public class Door extends AreaEntity {
 	private DiscreteCoordinates goesToCoord;
 	private List<DiscreteCoordinates> otherCells;
 	
-	public Door(Area area, String destination, DiscreteCoordinates destinationCoords, Orientation orientation,
+	public Door(Area area, String destination, DiscreteCoordinates destinationCoords,
 	            DiscreteCoordinates position, DiscreteCoordinates... otherCells) {
-		super(area, orientation, position);
+		super(area, Orientation.DOWN, position);
 		goesTo = destination;
 		goesToCoord = destinationCoords;
 		this.otherCells = new LinkedList<DiscreteCoordinates>();

@@ -34,7 +34,7 @@ public class LevelSelector extends EnigmeArea {
 				}
 				break;
 			}
-			Door door = new Door(this, destination, destinationCoords, Orientation.DOWN, new DiscreteCoordinates(i, 7));
+			Door door = new Door(this, destination, destinationCoords, new DiscreteCoordinates(i, 7));
 			registerActor(door);
 		}
 		return supSuccess;

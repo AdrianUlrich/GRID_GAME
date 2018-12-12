@@ -15,9 +15,9 @@ public class Apple extends Collectable {
 	
 	private final Sprite sprite;
 	
-	public Apple(Area area, Orientation orientation, DiscreteCoordinates position) {
-		super(area, orientation, position);
-		sprite = new Sprite("apple.1", 1, 1.f, this);
+	public Apple(Area area, DiscreteCoordinates position) {
+		super(area, Orientation.DOWN, position);
+		sprite = new Sprite("apple.1", 1.f, 1.f, this);
 	}
 	
 	@Override

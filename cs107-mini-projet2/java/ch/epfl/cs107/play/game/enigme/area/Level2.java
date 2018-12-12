@@ -8,7 +8,6 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
 public class Level2 extends EnigmeArea {
-	
 	public Level2() {
 		super("Level2");
 	}
@@ -16,10 +15,10 @@ public class Level2 extends EnigmeArea {
 	@Override
 	public boolean begin(Window window, FileSystem fileSystem) {
 		boolean supSuccess = super.begin(window, fileSystem);
-		Door door = new Door(this, "LevelSelector", new DiscreteCoordinates(2, 6), Orientation.DOWN,
+		Door door = new Door(this, "LevelSelector", new DiscreteCoordinates(2, 6),
 				new DiscreteCoordinates(5, 0));
 		registerActor(door);
-		Apple apple = new Apple(this, Orientation.DOWN, new DiscreteCoordinates(5, 6));
+		Apple apple = new Apple(this, new DiscreteCoordinates(5, 6));
 		registerActor(apple);
 		return supSuccess;
 	}

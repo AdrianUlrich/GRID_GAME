@@ -218,6 +218,11 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 			getOwnerArea().unregisterActor(collectable);
 			collectable.setIsCollected(true);
 		}
+		
+		@Override
+		public void interactWith(SwitchableEntity switchableEntity) {
+			switchableEntity.switchState();
+		}
 	}
 	
 }
