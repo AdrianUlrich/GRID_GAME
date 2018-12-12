@@ -194,12 +194,12 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 		Button upArrow = keyboard.get(Keyboard.W);
 		Button lKey = keyboard.get(Keyboard.L);
 
+		//allows to move double speed if the character is running.
 		int factor = (keyboard.get(Keyboard.SPACE).isDown() && canRun ? 2 : 1);
-		boolean moved = false;
 
 		if (leftArrow.isDown()) {
 			if (getOrientation() == Orientation.LEFT) {
-				moved = move(ANIMATION_DURATION / factor);
+				move(ANIMATION_DURATION / factor);
 			} else {
 				setOrientation(Orientation.LEFT);
 			}
@@ -207,7 +207,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
 		if (rightArrow.isDown()) {
 			if (getOrientation() == Orientation.RIGHT) {
-				moved = move(ANIMATION_DURATION / factor);
+				move(ANIMATION_DURATION / factor);
 			} else {
 				setOrientation(Orientation.RIGHT);
 			}
@@ -215,7 +215,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
 		if (downArrow.isDown()) {
 			if (getOrientation() == Orientation.DOWN) {
-				moved = move(ANIMATION_DURATION / factor);
+				move(ANIMATION_DURATION / factor);
 			} else {
 				setOrientation(Orientation.DOWN);
 			}
@@ -223,7 +223,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
 		if (upArrow.isDown()) {
 			if (getOrientation() == Orientation.UP) {
-				moved = move(ANIMATION_DURATION / factor);
+				move(ANIMATION_DURATION / factor);
 			} else {
 				setOrientation(Orientation.UP);
 			}

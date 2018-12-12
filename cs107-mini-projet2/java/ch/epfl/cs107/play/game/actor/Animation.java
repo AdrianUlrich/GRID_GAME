@@ -9,13 +9,13 @@ import ch.epfl.cs107.play.window.Canvas;
 
 public class Animation implements Graphics {
 
-	private List<Sprite> animationFrames; 
+	private List<Sprite> animationFrames;
 	private int currentFrameIndex;
-	
+
 	public Animation(Sprite... animationFrames) {
 		this.animationFrames = new LinkedList<>();
 		for (Sprite frame : animationFrames) {
-		this.animationFrames.add(frame) ;
+			this.animationFrames.add(frame);
 		}
 		currentFrameIndex = 0;
 	}
@@ -30,7 +30,7 @@ public class Animation implements Graphics {
 	}
 
 	public void resetAnimation() {
-		currentFrameIndex = 0;		
+		currentFrameIndex = 0;
 	}
 
 }
