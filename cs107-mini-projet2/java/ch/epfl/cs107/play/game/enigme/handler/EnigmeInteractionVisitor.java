@@ -33,4 +33,8 @@ public interface EnigmeInteractionVisitor extends AreaInteractionVisitor {
 	default void interactWith(SwitchableEntity switchableEntity) {
 		// by default the interaction is empty
 	}
+	
+	default void interactWith(RunningShoes runningShoes) {
+		// by default the interaction is empty
+	}
 }
