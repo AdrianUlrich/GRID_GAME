@@ -33,7 +33,7 @@ public class Torch extends LogicEntity implements Switchable {
 	
 	@Override
 	public void acceptInteraction(AreaInteractionVisitor v) {
-		((EnigmeInteractionVisitor) v).interactWith(this);
+		((EnigmeInteractionVisitor) v).interactWith((Switchable) this);
 	}
 	
 	@Override

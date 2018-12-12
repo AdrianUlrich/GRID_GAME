@@ -46,13 +46,4 @@ public interface EnigmeInteractionVisitor extends AreaInteractionVisitor {
 	default void interactWith(RunningShoes runningShoes) {
 		// by default the interaction is empty
 	}
-	
-	default void interactWith(Switchable switchable) {
-		// by default the interaction is empty
-	}
-	
-	default void interactWith(PressurePlate pressurePlate) {
-		// Any interactor triggers the pressure plate
-		pressurePlate.On();
-	}
 }
