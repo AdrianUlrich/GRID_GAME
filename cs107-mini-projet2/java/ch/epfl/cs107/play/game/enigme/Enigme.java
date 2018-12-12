@@ -47,6 +47,7 @@ public class Enigme extends AreaGame {
 		if (player.isPassingDoor()) {
 			player.isPassingDoor(false);
 			if (!player.isMoving()) {
+				System.out.println("passdoor*");
 				player.leaveArea();
 				setCurrentArea(player.passedDoor().goesTo(), false);
 				player.enterArea(getCurrentArea());
