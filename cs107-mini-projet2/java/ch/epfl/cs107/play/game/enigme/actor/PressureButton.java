@@ -1,6 +1,5 @@
 package ch.epfl.cs107.play.game.enigme.actor;
 
-
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
@@ -10,14 +9,11 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import java.util.Collections;
 import java.util.List;
 
-public class PressurePlate extends LogicEntity {
-	private final int delay;
-	private int timeSinceActivation;
+public class PressureButton extends LogicEntity implements Switchable {
 	
-	public PressurePlate(Area area, DiscreteCoordinates position, int delay) {
+	public PressureButton(Area area, DiscreteCoordinates position) {
 		super(area, position, true);
-		setGraphics(new Sprite("GroundLightOn", 1.f, 1.f, this), new Sprite("GroundPlateOff", 1.f, 1.f, this));
-		this.delay = delay;
+		setGraphics(new Sprite("GroundLightOn", 1.f, 1.f, this), new Sprite("GroundLightOff", 1.f, 1.f, this));
 	}
 	
 	@Override
@@ -46,18 +42,13 @@ public class PressurePlate extends LogicEntity {
 	}
 	
 	@Override
-	public void On() {
-		super.On();
-		timeSinceActivation = 0;
+	public void update(float deltaTime) {
+		super.update(deltaTime);
 	}
 	
 	@Override
-	public void update(float deltaTime) {
-		super.update(deltaTime);
-		if (isOn()) {
-			timeSinceActivation++;
-			if (timeSinceActivation >= delay)
-				Off();
-		}
+	public boolean switchState() {
+		return isOn(!isOn());
 	}
+	
 }

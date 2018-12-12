@@ -39,8 +39,12 @@ public interface EnigmeInteractionVisitor extends AreaInteractionVisitor {
 	}
 	
 	default void interactWith(PressurePlate pressurePlate) {
-		// Any interactor triggers the pressure plate
+		//		// Any interactor triggers the pressure plate
 		pressurePlate.On();
+	}
+	
+	default void interactWith(PressureButton pressureButton) {
+		// by default the interaction is empty
 	}
 	
 	default void interactWith(RunningShoes runningShoes) {

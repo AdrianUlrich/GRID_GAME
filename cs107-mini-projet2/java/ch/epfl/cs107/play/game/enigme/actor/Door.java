@@ -39,7 +39,12 @@ public class Door extends AreaEntity {
 	
 	@Override
 	public List<DiscreteCoordinates> getCurrentCells() {
-		return Collections.singletonList(getCurrentMainCellCoordinates());
+		List<DiscreteCoordinates> coordinates = new LinkedList<>();
+		coordinates.add(getCurrentMainCellCoordinates());
+		for (DiscreteCoordinates cell : otherCells) {
+			coordinates.add(cell);
+		}
+		return coordinates;
 	}
 	
 	@Override
