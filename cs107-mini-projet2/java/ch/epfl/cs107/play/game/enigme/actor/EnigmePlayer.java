@@ -237,8 +237,8 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 			animationTime = 0;
 		}
 		
-		wantsViewInteraction = lKey.isDown();
-
+		wantsViewInteraction = lKey.isPressed();
+		
 		super.update(deltaTime);
 	}
 
@@ -256,8 +256,8 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 		}
 
 		@Override
-		public void interactWith(SwitchableEntity switchableEntity) {
-			switchableEntity.switchState();
+		public void interactWith(Switchable switchable) {
+			switchable.switchState();
 		}
 
 		@Override

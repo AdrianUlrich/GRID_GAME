@@ -7,34 +7,43 @@ import ch.epfl.cs107.play.game.enigme.actor.*;
 public interface EnigmeInteractionVisitor extends AreaInteractionVisitor {
 	/**
 	 * Simulates an interaction between Interactors and Apple in enigme
-	 * 
+	 *
 	 * @param apple (Apple), not null
 	 */
 	default void interactWith(Collectable collectable) {
 		// by default the interaction is empty
 	}
-
+	
 	default void interactWith(EnigmeBehavior.EnigmeCell cell) {
 		// by default the interaction is empty
 	}
-
+	
 	default void interactWith(Door door) {
 		// by default the interaction is empty
 	}
-
+	
 	default void interactWith(EnigmePlayer player) {
 		// by default the interaction is empty
 	}
-
+	
 	default void interactWith(Dialog dialog) {
 		// by default the interaction is empty
 	}
 	
-	default void interactWith(SwitchableEntity switchableEntity) {
+	default void interactWith(LogicEntity logicEntity) {
 		// by default the interaction is empty
 	}
 	
 	default void interactWith(RunningShoes runningShoes) {
 		// by default the interaction is empty
+	}
+	
+	default void interactWith(Switchable switchable) {
+		// by default the interaction is empty
+	}
+	
+	default void interactWith(PressurePlate pressurePlate) {
+		// Any interactor triggers the pressure plate
+		pressurePlate.On();
 	}
 }

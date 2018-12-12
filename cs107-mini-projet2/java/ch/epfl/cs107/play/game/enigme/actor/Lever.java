@@ -9,11 +9,11 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import java.util.Collections;
 import java.util.List;
 
-public class Torch extends LogicEntity implements Switchable {
+public class Lever extends LogicEntity implements Switchable {
 	
-	public Torch(Area area, DiscreteCoordinates position) {
-		super(area, position, true);
-		setGraphics(new Sprite("torch.ground.on.1", 1.f, 1.f, this), new Sprite("torch.ground.off", 1.f, 1.f, this));
+	public Lever(Area area, DiscreteCoordinates position, boolean isOn) {
+		super(area, position, isOn);
+		setGraphics(new Sprite("lever.big.left", 1.f, 1.f, this), new Sprite("lever.big.right", 1.f, 1.f, this));
 	}
 	
 	@Override
