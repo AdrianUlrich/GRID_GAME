@@ -25,120 +25,116 @@ public class Demo2Player extends MovableAreaEntity {
     private final Sprite sprite;
 
     public Demo2Player(Area area, Orientation orientation, DiscreteCoordinates position) {
-	super(area, orientation, position);
-	isPassingDoor = false;
-	sprite = new Sprite("ghost.1", 1, 1.f, this);
+        super(area, orientation, position);
+        isPassingDoor = false;
+        sprite = new Sprite("ghost.1", 1, 1.f, this);
     }
 
     public Demo2Player(Area area, DiscreteCoordinates position) {
-	this(area, Orientation.DOWN, position);
+        this(area, Orientation.DOWN, position);
     }
 
     public void enterArea(Area area, DiscreteCoordinates position) {
-	setOwnerArea(area);
-	getOwnerArea().registerActor(this);
-	setCurrentPosition(new Vector(position.x, position.y));
+        setOwnerArea(area);
+        getOwnerArea().registerActor(this);
+        setCurrentPosition(new Vector(position.x, position.y));
 //	update(ANIMATION_DURATION);
-	resetMotion();
+        resetMotion();
     }
-    
-    public void enterArea(Area area) {
-	enterArea(area,area.getEntrance());
-    }
-    
+
     public void leaveArea() {
-	getOwnerArea().unregisterActor(this);
+        getOwnerArea().unregisterActor(this);
     }
 
     public boolean isPassingDoor(boolean isPassingDoor) {
-	return this.isPassingDoor = isPassingDoor;
+        return this.isPassingDoor = isPassingDoor;
     }
 
     public boolean isPassingDoor() {
-	return isPassingDoor;
+        return isPassingDoor;
     }
 
     public Vector getOrientationVector() {
-	return getOrientation().toVector();
+        return getOrientation().toVector();
     }
 
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
-	return Collections.singletonList(getCurrentMainCellCoordinates());
+        return Collections.singletonList(getCurrentMainCellCoordinates());
     }
 
     @Override
     public boolean takeCellSpace() {
-	// Does take space
-	return true;
+        // Does take space
+        return true;
     }
 
     @Override
     public boolean isViewInteractable() {
-	// Can be interacted with at distance
-	return true;
+        // Can be interacted with at distance
+        return true;
     }
 
     @Override
     public boolean isCellInteractable() {
-	// Can be interacted with by contact
-	return true;
+        // Can be interacted with by contact
+        return true;
     }
 
     @Override
     public void draw(Canvas canvas) {
-	sprite.draw(getOwnerArea().getWindow());
+        sprite.draw(getOwnerArea().getWindow());
     }
 
     @Override
     public void update(float deltaTime) {
-	Keyboard keyboard = getOwnerArea().getWindow().getKeyboard();
-	Button leftArrow = keyboard.get(Keyboard.LEFT);
-	Button rightArrow = keyboard.get(Keyboard.RIGHT);
-	Button downArrow = keyboard.get(Keyboard.DOWN);
-	Button upArrow = keyboard.get(Keyboard.UP);
+        Keyboard keyboard = getOwnerArea().getKeyboard();
+        Button leftArrow = keyboard.get(Keyboard.LEFT);
+        Button rightArrow = keyboard.get(Keyboard.RIGHT);
+        Button downArrow = keyboard.get(Keyboard.DOWN);
+        Button upArrow = keyboard.get(Keyboard.UP);
 
-	if (leftArrow.isDown()) {
-	    if (getOrientation() == Orientation.LEFT) {
-		move(ANIMATION_DURATION);
-	    } else {
-		setOrientation(Orientation.LEFT);
-	    }
-	}
+        if (leftArrow.isDown()) {
+            if (getOrientation() == Orientation.LEFT) {
+                move(ANIMATION_DURATION);
+            } else {
+                setOrientation(Orientation.LEFT);
+            }
+        }
 
-	if (rightArrow.isDown()) {
-	    if (getOrientation() == Orientation.RIGHT) {
-		move(ANIMATION_DURATION);
-	    } else {
-		setOrientation(Orientation.RIGHT);
-	    }
-	}
+        if (rightArrow.isDown()) {
+            if (getOrientation() == Orientation.RIGHT) {
+                move(ANIMATION_DURATION);
+            } else {
+                setOrientation(Orientation.RIGHT);
+            }
+        }
 
-	if (downArrow.isDown()) {
-	    if (getOrientation() == Orientation.DOWN) {
-		move(ANIMATION_DURATION);
-	    } else {
-		setOrientation(Orientation.DOWN);
-	    }
-	}
+        if (downArrow.isDown()) {
+            if (getOrientation() == Orientation.DOWN) {
+                move(ANIMATION_DURATION);
+            } else {
+                setOrientation(Orientation.DOWN);
+            }
+        }
 
-	if (upArrow.isDown()) {
-	    if (getOrientation() == Orientation.UP) {
-		move(ANIMATION_DURATION);
-	    } else {
-		setOrientation(Orientation.UP);
-	    }
-	}
-	super.update(deltaTime);
+        if (upArrow.isDown()) {
+            if (getOrientation() == Orientation.UP) {
+                move(ANIMATION_DURATION);
+            } else {
+                setOrientation(Orientation.UP);
+            }
+        }
+        super.update(deltaTime);
     }
 
     @Override
     protected boolean move(int framesForMove) {
-	for (DiscreteCoordinates coord : getEnteringCells()) {
-	    if (((Demo2Behavior) getOwnerArea().getAreaBehavior()).getType(coord.x, coord.y) == Demo2CellType.DOOR) {
-		return isPassingDoor(true);
-	    }
-	}
-	return super.move(framesForMove);
+        for (DiscreteCoordinates coord : getEnteringCells()) {
+            if (((Demo2Behavior) getOwnerArea().getAreaBehavior()).getType(coord.x, coord.y) == Demo2CellType.DOOR) {
+                isPassingDoor(true);
+            }
+        }
+        return super.move(framesForMove);
     }
 }

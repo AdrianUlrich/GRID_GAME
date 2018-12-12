@@ -9,53 +9,56 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
 public class Demo2 extends AreaGame {
-
-    private Demo2Player player;
+	
+	private Demo2Player player;
 //    private TextGraphics playerDebugIndicator; //DEBUG
-
-    @Override
-    public int getFrameRate() {
-	return 24;
-    }
-
-    @Override
-    public String getTitle() {
-	return "Demo2";
-    }
-
-    @Override
-    public boolean begin(Window window, FileSystem fileSystem) {
-	super.begin(window, fileSystem);
-	addArea(new Room0());
-	addArea(new Room1());
-	setCurrentArea("LevelSelector", false);
-	player = new Demo2Player(getCurrentArea(), (new DiscreteCoordinates(5, 5)));
+	
+	@Override
+	public int getFrameRate() {
+		return 24;
+	}
+	
+	@Override
+	public String getTitle() {
+		return "Demo2";
+	}
+	
+	@Override
+	public boolean begin(Window window, FileSystem fileSystem) {
+		super.begin(window, fileSystem);
+		addArea(new Room0());
+		addArea(new Room1());
+		setCurrentArea("LevelSelector", false);
+		player = new Demo2Player(getCurrentArea(), (new DiscreteCoordinates(5, 5)));
 //	playerDebugIndicator = new TextGraphics("O", .3f, null, Color.GREEN, .15f, true, false, new Vector(.5f, .5f), // DEBUG
 //		TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE, .7f, .0f); // DEBUG
 //	playerDebugIndicator.setParent(player); //DEBUG
-	getCurrentArea().setViewCandidate(player);
-	getCurrentArea().registerActor(player);
-	return true;
-    }
-
-    @Override
-    public void update(float deltaTime) {
+		getCurrentArea().setViewCandidate(player);
+		getCurrentArea().registerActor(player);
+		return true;
+	}
+	
+	@Override
+	public void update(float deltaTime) {
 //	playerDebugIndicator.setOutlineColor(player.isPassingDoor()?Color.CYAN:Color.GREEN); // DEBUG
 //	playerDebugIndicator.setAnchor((new Vector(.5f, .5f)) // DEBUG
 //		.add(player.isMoving()?player.getOrientationVector():Vector.ZERO)); // DEBUG
 //	playerDebugIndicator.draw(getWindow()); // DEBUG
-	if (player.isPassingDoor() && !player.isMoving()) {
-	    if (getCurrentArea().getTitle() == "Level1") {
-		setCurrentArea("LevelSelector", false);
-	    } else {
-		setCurrentArea("Level1", false);
-	    }
-	    player.leaveArea();
-	    player.enterArea(getCurrentArea());
-	    player.isPassingDoor(false);
-	    getCurrentArea().setViewCandidate(player);
+		if (player.isPassingDoor() && !player.isMoving()) {
+			DiscreteCoordinates coordinates;
+			if (getCurrentArea().getTitle() == "Level1") {
+				setCurrentArea("LevelSelector", false);
+				coordinates = new DiscreteCoordinates(5, 5);
+			} else {
+				setCurrentArea("Level1", false);
+				coordinates = new DiscreteCoordinates(5, 2);
+			}
+			player.leaveArea();
+			player.enterArea(getCurrentArea(), new DiscreteCoordinates(5, 5));
+			player.isPassingDoor(false);
+			getCurrentArea().setViewCandidate(player);
+		}
+		super.update(deltaTime);
 	}
-	super.update(deltaTime);
-    }
-
+	
 }

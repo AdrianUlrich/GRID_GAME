@@ -8,10 +8,5 @@ public class Room1 extends Demo2Area{
 	public Room1(){
 		super("Level1");
 	}
-	
-	@Override
-	public DiscreteCoordinates getEntrance() {
-	    return new DiscreteCoordinates(5,2);
-	}
-	
+
 }

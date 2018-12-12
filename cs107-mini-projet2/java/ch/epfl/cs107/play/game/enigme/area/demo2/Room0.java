@@ -8,9 +8,4 @@ public class Room0 extends Demo2Area {
 		super("LevelSelector");
 	}
 
-	@Override
-	public DiscreteCoordinates getEntrance() {
-	    return new DiscreteCoordinates(5, 5);
-	}
-	
 }

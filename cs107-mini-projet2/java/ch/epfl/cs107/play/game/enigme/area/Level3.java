@@ -16,12 +16,5 @@ public class Level3 extends EnigmeArea {
     public boolean begin(Window window, FileSystem fileSystem) {
 	return super.begin(window, fileSystem);
     }
-
-
-
-    @Override
-    public DiscreteCoordinates getEntrance() {
-	return new DiscreteCoordinates(5, 2);
-    }
-
+    
 }

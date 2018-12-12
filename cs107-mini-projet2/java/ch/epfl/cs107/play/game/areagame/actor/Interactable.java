@@ -9,11 +9,11 @@ import java.util.HashSet;
 
 /**
  * Models objects receptive to interaction (i.e. Interactor can interact with them)
+ *
  * @see Interactor
  * This interface makes sense only in the "AreaGame" context with Actor contained into Area Cell
  */
 public interface Interactable {
-    // TODO implements me #PROJECT #TUTO
 	List<DiscreteCoordinates> getCurrentCells();
 	
 	boolean takeCellSpace();
@@ -22,5 +22,5 @@ public interface Interactable {
 	
 	boolean isCellInteractable();
 	
-	void acceptInteraction(AreaInteractionVisitor v) ;
+	void acceptInteraction(AreaInteractionVisitor v);
 }
