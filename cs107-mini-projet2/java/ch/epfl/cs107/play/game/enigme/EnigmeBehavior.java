@@ -53,6 +53,9 @@ public class EnigmeBehavior extends AreaBehavior {
 
                 case -14112955:
                     return OUTDOOR_WALKABLE;
+                    
+                case -256 : 
+                	return OUTDOOR_WALKABLE;
 
                 default:
                     return NULL;

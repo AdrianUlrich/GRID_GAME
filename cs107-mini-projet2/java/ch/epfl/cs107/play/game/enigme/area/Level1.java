@@ -20,7 +20,7 @@ public class Level1 extends EnigmeArea {
 		boolean supSuccess = super.begin(window, fileSystem);
 		Door door = new Door(this, "LevelSelector", new DiscreteCoordinates(1, 6),
 				new DiscreteCoordinates(5, 0));
-		Portal portal1 = new Portal(this, "Level1", new DiscreteCoordinates(5,5), new DiscreteCoordinates(8,8));
+		Portal portal1 = new Portal(this, "Level1", new DiscreteCoordinates(5,3), new DiscreteCoordinates(8,8));
 		registerActor(new Key(this,new DiscreteCoordinates(5,5)));
 		registerActor(new Torch(this,new DiscreteCoordinates(5,6)));
 		registerActor(door);

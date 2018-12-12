@@ -1,5 +1,6 @@
 package ch.epfl.cs107.play.game.enigme.area;
 
+import ch.epfl.cs107.play.game.enigme.actor.Door;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
@@ -14,7 +15,11 @@ public class Level3 extends EnigmeArea {
 
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
-	return super.begin(window, fileSystem);
+    	boolean supSuccess = super.begin(window, fileSystem);
+	Door door = new Door(this, "LevelSelector", new DiscreteCoordinates(2, 6),
+			new DiscreteCoordinates(5, 0));
+	registerActor(door);
+	return supSuccess;
     }
     
 }

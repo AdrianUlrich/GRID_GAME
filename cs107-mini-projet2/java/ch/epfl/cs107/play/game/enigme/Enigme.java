@@ -5,6 +5,7 @@ import ch.epfl.cs107.play.game.enigme.actor.EnigmePlayer;
 import ch.epfl.cs107.play.game.enigme.area.Level1;
 import ch.epfl.cs107.play.game.enigme.area.Level2;
 import ch.epfl.cs107.play.game.enigme.area.Level3;
+import ch.epfl.cs107.play.game.enigme.area.Level4;
 import ch.epfl.cs107.play.game.enigme.area.LevelSelector;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -32,6 +33,7 @@ public class Enigme extends AreaGame {
 		addArea(new Level1());
 		addArea(new Level2());
 		addArea(new Level3());
+		addArea(new Level4());
 		setCurrentArea("LevelSelector", false);
 		player = new EnigmePlayer(getCurrentArea(), (new DiscreteCoordinates(5, 5)));
 //		playerDebugIndicator = new TextGraphics("O", .3f, null, Color.GREEN, .15f, true, false, new Vector(.5f, .5f), // DEBUG
