@@ -17,7 +17,7 @@ public class InteriorRoom extends EnigmeArea {
 	public boolean begin(Window window, FileSystem fileSystem) {
 		boolean supSuccess = super.begin(window, fileSystem);
 		Door interiorDoor = new Door(this, "Enigme1", new DiscreteCoordinates(6,31), new DiscreteCoordinates(7,0));
-		Talkable pnj = new Talkable(this, new DiscreteCoordinates(7,5), new Dialog("Congratulation for beating the game! Enjoy your retirement.","dialog.1",this), "cup.1");
+		Talkable pnj = new Talkable(this, new DiscreteCoordinates(7,5), new Dialog("Congratulations for beating the game! Enjoy your retirement.","dialog.1",this), "cup.1");
 		registerActor(pnj);
 		registerActor(interiorDoor);
 		return supSuccess;

@@ -35,6 +35,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 	private boolean canRun;
 	private boolean canBeTeleported;
 	private boolean isTalking;
+	private boolean hasBombs;
 
 	public EnigmePlayer(Area area, Orientation orientation, DiscreteCoordinates position) {
 		super(area, orientation, position);
@@ -64,6 +65,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 		canRun = false;
 		canBeTeleported = true;
 		isTalking = false;
+		hasBombs = false;
 	}
 
 	public EnigmePlayer(Area area, DiscreteCoordinates position) {
@@ -301,15 +303,23 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 			isTalking = !isTalking;
 			if (isTalking) {
 				talkable.showText();
-			}
-			else {
+			} else {
 				talkable.hideText();
 			}
 		}
-		
+
+		@Override
+		public void interactWith(Bomb bomb) {
+			hasBombs = true;
+			getOwnerArea().unregisterActor(bomb);
+			bomb.setIsCollected(true);
+		}
+
 		@Override
 		public void interactWith(ExplodableRock explodableRock) {
-			explodableRock.setBomb(3.f);
+			if (hasBombs) {
+				explodableRock.setBomb(3.f);
+			}
 		}
 	}
 

@@ -55,6 +55,10 @@ public interface EnigmeInteractionVisitor extends AreaInteractionVisitor {
 	{
 		// by default the interaction is empty
 	}
+
+	default void interactWith(Bomb bomb) {
+		//by default does nothing
+	}
 	
 	default void interactWith(ExplodableRock explodableRock) {
 		// by default the interaction is empty
