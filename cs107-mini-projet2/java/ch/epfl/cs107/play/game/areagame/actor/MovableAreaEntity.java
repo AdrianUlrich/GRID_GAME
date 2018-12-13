@@ -16,8 +16,10 @@ import ch.epfl.cs107.play.math.Vector;
  */
 public abstract class MovableAreaEntity extends AreaEntity {
 	
-	/// Indicate if the actor is currently moving
+	/// Indicates whether the actor is currently moving
 	private boolean isMoving;
+	/// Indicates whether it is the actor's first frame on its new cell
+	private boolean justArrived;
 	/// Indicate how many frames the current move is supposed to take
 	private int framesForCurrentMove;
 	/// The target cell (i.e. where the mainCell will be after the motion)
@@ -73,12 +75,17 @@ public abstract class MovableAreaEntity extends AreaEntity {
 	
 	@Override
 	public void update(float deltaTime) {
-		if (isMoving && !getCurrentCells().get(0).equals(targetMainCellCoordinates)) {
-			Vector distance = getOrientation().toVector();
-			distance = distance.mul(1.0f / framesForCurrentMove);
-			setCurrentPosition(getPosition().add(distance));
+		if (isMoving) {
+			if (!getCurrentCells().get(0).equals(targetMainCellCoordinates)) {
+				Vector distance = getOrientation().toVector();
+				distance = distance.mul(1.0f / framesForCurrentMove);
+				setCurrentPosition(getPosition().add(distance));
+			} else {
+				justArrived = true;
+				resetMotion();
+			}
 		} else {
-			resetMotion();
+			justArrived = false;
 		}
 	}
 	
@@ -90,10 +97,14 @@ public abstract class MovableAreaEntity extends AreaEntity {
 	}
 	
 	/**
-	 * @return wether this isMoving
+	 * @return whether this isMoving
 	 */
 	public boolean isMoving() {
 		return isMoving;
+	}
+	
+	public boolean isJustArrived() {
+		return justArrived;
 	}
 	
 	protected final List<DiscreteCoordinates> getLeavingCells() {

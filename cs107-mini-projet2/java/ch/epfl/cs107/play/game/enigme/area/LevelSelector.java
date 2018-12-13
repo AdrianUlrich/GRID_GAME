@@ -34,8 +34,8 @@ public class LevelSelector extends EnigmeArea {
 					destinationCoords = new DiscreteCoordinates(16,0);
 					break;
 				default: {
-					destination = "LevelSelector";
-					destinationCoords = new DiscreteCoordinates(i, 7);
+					destination = null;
+					destinationCoords = null;
 				}
 				break;
 			}

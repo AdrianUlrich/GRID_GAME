@@ -50,7 +50,8 @@ public class Enigme extends AreaGame {
 	public void update(float deltaTime) {
 		if (player.isPassingDoor()) {
 			player.isPassingDoor(false);
-			if (!player.isMoving()) {
+			if (!player.isMoving() && player.passedDoor().goesTo() != null) {
+//				System.out.println("passdoor*");
 				player.leaveArea();
 				setCurrentArea(player.passedDoor().goesTo(), false);
 				player.enterArea(getCurrentArea());
