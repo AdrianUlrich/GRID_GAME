@@ -1,12 +1,10 @@
 package ch.epfl.cs107.play.game.areagame;
 
 import java.util.HashMap;
+
 import java.util.Map;
 
-import javax.swing.text.BadLocationException;
-
 import ch.epfl.cs107.play.game.Game;
-import ch.epfl.cs107.play.game.enigme.actor.Dialog;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.window.Window;
 
@@ -15,16 +13,16 @@ import ch.epfl.cs107.play.window.Window;
  * has multiple Areas
  */
 abstract public class AreaGame implements Game {
-	
+
 	// Context objects
 	private Window window;
 	private FileSystem fileSystem;
-	
+
 	/// A map containing all the Area of the Game
 	private Map<String, Area> areas;
 	/// The current area the game is in
 	private Area currentArea;
-	
+
 	/**
 	 * Add an Area to the AreaGame list
 	 *
@@ -33,7 +31,7 @@ abstract public class AreaGame implements Game {
 	protected final void addArea(Area a) {
 		areas.put(a.getTitle(), a);
 	}
-	
+
 	/**
 	 * Setter for the current area: Select an Area in the list from its key - the
 	 * area is then begin or resume depending if the area is already started or not
@@ -50,7 +48,7 @@ abstract public class AreaGame implements Game {
 			currentArea.suspend();
 		}
 		currentArea = areas.get(key);
-		
+
 		if (currentArea != null) {
 			if (forceBegin == true || currentArea.wasVisited() == false) {
 				currentArea.begin(window, fileSystem);
@@ -65,31 +63,31 @@ abstract public class AreaGame implements Game {
 		}
 		return currentArea;
 	}
-	
+
 	protected Area getArea(String room) {
 		return areas.get(room);
 	}
-	
+
 	protected Area getCurrentArea() {
 		return currentArea;
 	}
-	
+
 	/**
 	 * @return (Window) : the Graphic and Audio context
 	 */
 	protected final Window getWindow() {
 		return window;
 	}
-	
+
 	/**
 	 * @return (FIleSystem): the linked file system
 	 */
 	protected final FileSystem getFileSystem() {
 		return fileSystem;
 	}
-	
+
 	/// AreaGame implements Playable
-	
+
 	@Override
 	public boolean begin(Window window, FileSystem fileSystem) {
 		this.fileSystem = fileSystem;
@@ -97,15 +95,14 @@ abstract public class AreaGame implements Game {
 		areas = new HashMap<>();
 		return true;
 	}
-	
+
 	@Override
 	public void update(float deltaTime) {
 		currentArea.update(deltaTime);
 	}
-	
+
 	@Override
 	public void end() {
-		// TODO save the game states somewhere
 	}
-	
+
 }

@@ -28,5 +28,6 @@ An Exploding ExplodingRock will blow up any adjecent or diagonal ExplosingRock i
 We had to add a few paramaters to the Player update method in ordre for linked Portals not to constantly teleport back to each other. 
 Therefor the player can only interact with a Teleporter or Door after using another one if he has successfully moved to another cell inbetween.
 
--
+-An immovable rock Class, just an Entity used to block some paths.
 
+-Added a state in area allowing to pause the game by pressing "K".

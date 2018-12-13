@@ -11,6 +11,9 @@ import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
 
+/**
+ * A Collectable allowing the player to run once collected.
+ */
 public class RunningShoes extends Collectable{
 	
 	private final Sprite sprite;

@@ -1,12 +1,8 @@
 package ch.epfl.cs107.play.game.enigme.area;
 
-import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.enigme.actor.*;
-import ch.epfl.cs107.play.game.enigme.actor.demo2.Demo2Player;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.math.RegionOfInterest;
-import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Window;
 
 public class Level1 extends EnigmeArea {
@@ -17,8 +13,7 @@ public class Level1 extends EnigmeArea {
 	@Override
 	public boolean begin(Window window, FileSystem fileSystem) {
 		boolean supSuccess = super.begin(window, fileSystem);
-		Door door = new Door(this, "LevelSelector", new DiscreteCoordinates(1, 6),
-				new DiscreteCoordinates(5, 0));
+		Door door = new Door(this, "LevelSelector", new DiscreteCoordinates(1, 6), new DiscreteCoordinates(5, 0));
 		registerActor(door);
 		return supSuccess;
 	}
