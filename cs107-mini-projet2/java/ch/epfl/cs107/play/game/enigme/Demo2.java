@@ -9,20 +9,20 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
 public class Demo2 extends AreaGame {
-	
+
 	private Demo2Player player;
 //    private TextGraphics playerDebugIndicator; //DEBUG
-	
+
 	@Override
 	public int getFrameRate() {
 		return 24;
 	}
-	
+
 	@Override
 	public String getTitle() {
 		return "Demo2";
 	}
-	
+
 	@Override
 	public boolean begin(Window window, FileSystem fileSystem) {
 		super.begin(window, fileSystem);
@@ -37,7 +37,7 @@ public class Demo2 extends AreaGame {
 		getCurrentArea().registerActor(player);
 		return true;
 	}
-	
+
 	@Override
 	public void update(float deltaTime) {
 //	playerDebugIndicator.setOutlineColor(player.isPassingDoor()?Color.CYAN:Color.GREEN); // DEBUG
@@ -60,5 +60,5 @@ public class Demo2 extends AreaGame {
 		}
 		super.update(deltaTime);
 	}
-	
+
 }

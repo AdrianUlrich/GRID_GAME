@@ -1,7 +1,7 @@
 package ch.epfl.cs107.play.game.enigme;
 
 import ch.epfl.cs107.play.game.areagame.AreaGame;
-import ch.epfl.cs107.play.game.enigme.actor.Dialog;
+
 import ch.epfl.cs107.play.game.enigme.actor.EnigmePlayer;
 import ch.epfl.cs107.play.game.enigme.area.InteriorRoom;
 import ch.epfl.cs107.play.game.enigme.area.Level1;
@@ -14,20 +14,20 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
 public class Enigme extends AreaGame {
-	
+
 	private EnigmePlayer player;
 //    private TextGraphics playerDebugIndicator; //DEBUG
-	
+
 	@Override
 	public int getFrameRate() {
 		return 24;
 	}
-	
+
 	@Override
 	public String getTitle() {
 		return "Demo2";
 	}
-	
+
 	@Override
 	public boolean begin(Window window, FileSystem fileSystem) {
 		super.begin(window, fileSystem);
@@ -46,7 +46,7 @@ public class Enigme extends AreaGame {
 		getCurrentArea().registerActor(player);
 		return true;
 	}
-	
+
 	@Override
 	public void update(float deltaTime) {
 		if (player.isPassingDoor()) {
@@ -62,5 +62,5 @@ public class Enigme extends AreaGame {
 		}
 		super.update(deltaTime);
 	}
-	
+
 }

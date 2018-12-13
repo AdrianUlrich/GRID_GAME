@@ -38,6 +38,12 @@ public abstract class AreaBehavior {
 		cells = new Cell[width][height];
 	}
 	
+	/**
+	 * Checks wether an entity has permission to leave some cells.
+	 * @param entity : The entity to be checked
+	 * @param coordinates : The list of coordinates to be checked.
+	 * @return (boolean) : Whether the entity is allowed to leave the cells.
+	 */
 	public boolean canLeave(Interactable entity, List<DiscreteCoordinates> coordinates) {
 		for (DiscreteCoordinates coord : coordinates) {
 			if (coord.x < 0 || coord.y < 0 || coord.x > width || coord.y > height) {
@@ -49,6 +55,12 @@ public abstract class AreaBehavior {
 		return true;
 	}
 	
+	/**
+	 * Checks wether an entity has permission to enter some cells.
+	 * @param entity : The entity to be checked
+	 * @param coordinates : The list of coordinates to be checked.
+	 * @return (boolean) : Whether the entity is allowed to enter the cells.
+	 */
 	public boolean canEnter(Interactable entity, List<DiscreteCoordinates> coordinates) {
 		for (DiscreteCoordinates coord : coordinates) {
 			if (coord.x < 0 || coord.y < 0 || coord.x > width || coord.y > height) {
@@ -60,12 +72,22 @@ public abstract class AreaBehavior {
 		return true;
 	}
 	
+	/**
+	 * Makes an entity leave some cells.
+	 * @param entity : the entity to leave some cells.
+	 * @param coordinates : the list of coordinates to be left
+	 */
 	protected void leave(Interactable entity, List<DiscreteCoordinates> coordinates) {
 		for (DiscreteCoordinates coord : coordinates) {
 			cells[coord.x][coord.y].leave(entity);
 		}
 	}
 	
+	/**
+	 * Makes an entity enter some cells.
+	 * @param entity : the entity to enter some cells.
+	 * @param coordinates : the list of coordinates to be entered.
+	 */
 	protected void enter(Interactable entity, List<DiscreteCoordinates> coordinates) {
 		for (DiscreteCoordinates coord : coordinates) {
 			cells[coord.x][coord.y].enter(entity);
@@ -96,6 +118,7 @@ public abstract class AreaBehavior {
 		return cells;
 	}
 	
+
 	public void cellInteractionOf(Interactor interactor) {
 		for (DiscreteCoordinates coord : interactor.getCurrentCells()) {
 			if (coord.x >= 0 || coord.y >= 0 || coord.x < width || coord.y < height) {
@@ -112,6 +135,9 @@ public abstract class AreaBehavior {
 		}
 	}
 	
+	/**
+	 * An Area behavior is actually a grid made of cells.
+	 */
 	public abstract class Cell implements Interactable {
 		private DiscreteCoordinates pos;
 		private Set<Interactable> interactables;

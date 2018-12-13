@@ -21,31 +21,31 @@ import java.util.Map;
  * a List of Actors. Area implements Playable
  */
 public abstract class Area implements Playable {
-	
+
 	// Context objects
 	private Window window;
 	private FileSystem fileSystem;
-	
+
 	/// List of Actors inside the area
 	private List<Actor> actors;
 	private List<Actor> registeredActors;
 	private List<Actor> unregisteredActors;
 	private List<Interactor> interactors;
-	
+
 	private Map<Interactable, List<DiscreteCoordinates>> interactablesToEnter;
 	private Map<Interactable, List<DiscreteCoordinates>> interactablesToLeave;
-	
+
 	// Camera Parameter
 	// actor on which the view is centered
 	private Actor viewCandidate;
 	// effective center of the view
 	private Vector viewCenter;
-	
+
 	/// The behavior Map
 	private AreaBehavior areaBehavior;
-	
+
 	private boolean wasVisited = false;
-	
+
 	@Override
 	public boolean begin(Window window, FileSystem fileSystem) {
 		this.window = window;
@@ -61,36 +61,36 @@ public abstract class Area implements Playable {
 		wasVisited = true;
 		return true;
 	}
-	
+
 	/**
 	 * @return (float): camera scale factor, assume it is the same in x and y
-	 * direction
+	 *         direction
 	 */
 	public abstract float getCameraScaleFactor();
-	
+
 	public Window getWindow() {
 		return window;
 	}
-	
+
 	/**
 	 * @return the Window Keyboard for inputs
 	 */
 	public final Keyboard getKeyboard() {
 		return getWindow().getKeyboard();
 	}
-	
+
 	protected FileSystem getFileSystem() {
 		return fileSystem;
 	}
-	
+
 	final protected void setBehavior(AreaBehavior ab) {
 		this.areaBehavior = ab;
 	}
-	
+
 	public AreaBehavior getAreaBehavior() {
 		return areaBehavior;
 	}
-	
+
 	/**
 	 * Getter for the area width
 	 *
@@ -99,7 +99,7 @@ public abstract class Area implements Playable {
 	public final int getWidth() {
 		return areaBehavior.getWidth();
 	}
-	
+
 	/**
 	 * Getter for the area height
 	 *
@@ -108,15 +108,22 @@ public abstract class Area implements Playable {
 	public final int getHeight() {
 		return areaBehavior.getHeight();
 	}
-	
+
 	public final boolean wasVisited() {
 		return wasVisited;
 	}
-	
+
 	public final void setViewCandidate(Actor a) {
 		this.viewCandidate = a;
 	}
-	
+
+	/**
+	 * Allows an entity to leave some cells.
+	 * 
+	 * @param entity      : the Entity to leave the cells.
+	 * @param coordinates : the list of coordinates of the cells to be left
+	 * @return (boolean) : Whether the entity could leave the cells.
+	 */
 	public final boolean leaveAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates) {
 		if (areaBehavior.canLeave(entity, coordinates)) {
 			interactablesToLeave.put(entity, coordinates);
@@ -124,7 +131,14 @@ public abstract class Area implements Playable {
 		} else
 			return false;
 	}
-	
+
+	/**
+	 * Allows an entity to enter some cells.
+	 * 
+	 * @param entity      : the Entity to enter the cells.
+	 * @param coordinates : the list of coordinates of the cells to be entered
+	 * @return (boolean) : Whether the entity could enter the cells.
+	 */
 	public final boolean enterAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates) {
 		if (areaBehavior.canEnter(entity, coordinates)) {
 			interactablesToEnter.put(entity, coordinates);
@@ -132,7 +146,7 @@ public abstract class Area implements Playable {
 		} else
 			return false;
 	}
-	
+
 	/**
 	 * Add an actor to the actors list
 	 *
@@ -153,9 +167,9 @@ public abstract class Area implements Playable {
 			System.out.println("Actor " + a + " cannot be completely added , so removed it from where it was");
 			removeActor(a, true);
 		}
-		
+
 	}
-	
+
 	/**
 	 * Remove an actor form the actor list
 	 *
@@ -175,7 +189,7 @@ public abstract class Area implements Playable {
 			addActor(a, true);
 		}
 	}
-	
+
 	/**
 	 * Register an actor : will be added at next update
 	 *
@@ -185,7 +199,7 @@ public abstract class Area implements Playable {
 	public final boolean registerActor(Actor a) {
 		return registeredActors.add(a);
 	}
-	
+
 	/**
 	 * Unregister an actor : will be removed at next update
 	 *
@@ -196,7 +210,7 @@ public abstract class Area implements Playable {
 		unregisteredActors.add(a);
 		return false;
 	}
-	
+
 	/**
 	 * Resume method: Can be overridden
 	 *
@@ -207,7 +221,7 @@ public abstract class Area implements Playable {
 	public boolean resume(Window window, FileSystem fileSystem) {
 		return true;
 	}
-	
+
 	@Override
 	public void update(float deltaTime) {
 		updateCamera();
@@ -226,7 +240,7 @@ public abstract class Area implements Playable {
 			}
 		}
 	}
-	
+
 	private final void purgeRegistration() {
 		// add newly registered actors to the actors list
 		for (Actor actor : registeredActors) {
@@ -244,14 +258,14 @@ public abstract class Area implements Playable {
 		for (Interactable i : interactablesToLeave.keySet()) {
 			areaBehavior.leave(i, interactablesToLeave.get(i));
 		}
-		
+
 		// once updated actors, clears lists
 		registeredActors.clear();
 		unregisteredActors.clear();
 		interactablesToEnter.clear();
 		interactablesToLeave.clear();
 	}
-	
+
 	private void updateCamera() {
 		if (viewCandidate != null) {
 			viewCenter = viewCandidate.getPosition();
@@ -260,17 +274,17 @@ public abstract class Area implements Playable {
 		Transform viewTransform = Transform.I.scaled(getCameraScaleFactor()).translated(viewCenter);
 		window.setRelativeTransform(viewTransform);
 	}
-	
+
 	/**
 	 * Suspend method: Can be overridden, called before resume other
 	 */
 	public void suspend() {
 		purgeRegistration();
 	}
-	
+
 	@Override
 	public void end() {
 		// TODO save the AreaState somewhere
 	}
-	
+
 }

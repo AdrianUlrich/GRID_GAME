@@ -9,6 +9,10 @@ import ch.epfl.cs107.play.game.areagame.io.ResourcePath;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
+/**
+ * Object represented by a rock sprite, attached a text and able to move.
+ *
+ */
 public class MovingRock extends GraphicsEntity {
 	private final TextGraphics text;
 	private String msg;

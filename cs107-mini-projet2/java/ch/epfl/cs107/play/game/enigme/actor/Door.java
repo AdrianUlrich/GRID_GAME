@@ -12,6 +12,9 @@ import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
 
+/**
+ * Door is an entity accepting cells interaction and teleporting the interactor to a specified area.
+ */
 public class Door extends AreaEntity {
 	
 	private String goesTo;
