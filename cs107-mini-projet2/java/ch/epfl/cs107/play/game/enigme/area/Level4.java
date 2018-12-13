@@ -1,9 +1,11 @@
 package ch.epfl.cs107.play.game.enigme.area;
 
+import ch.epfl.cs107.play.game.enigme.actor.Dialog;
 import ch.epfl.cs107.play.game.enigme.actor.Door;
 import ch.epfl.cs107.play.game.enigme.actor.ImmovableRock;
 import ch.epfl.cs107.play.game.enigme.actor.Portal;
 import ch.epfl.cs107.play.game.enigme.actor.RunningShoes;
+import ch.epfl.cs107.play.game.enigme.actor.Talkable;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
@@ -15,8 +17,6 @@ public class Level4 extends EnigmeArea {
     public Level4() {
 	super("Enigme1");
     }
-    
-    
 
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
@@ -119,6 +119,8 @@ public class Level4 extends EnigmeArea {
 	registerActor(runningShoes);
 	Door interiorDoor = new Door(this, "Enigme2", new DiscreteCoordinates(7,1), new DiscreteCoordinates(6,32));
 	registerActor(interiorDoor);
+	Talkable pnj = new Talkable(this, new DiscreteCoordinates(12,8), new Dialog("In my youth I was a very good runner, but i'm far too slow to make it in time now...","dialog.1",this), "old.man.4");
+	registerActor(pnj);
 	return supSuccess;
     }
     

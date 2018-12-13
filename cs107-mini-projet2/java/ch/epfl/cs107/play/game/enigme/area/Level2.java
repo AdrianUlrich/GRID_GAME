@@ -21,11 +21,7 @@ public class Level2 extends EnigmeArea {
 				new DiscreteCoordinates(5, 0));
 		registerActor(door);
 		Apple apple = new Apple(this, new DiscreteCoordinates(5, 6));
-		RunningShoes runningShoes = new RunningShoes(this, new DiscreteCoordinates(4,6));
-		ImmovableRock rock = new ImmovableRock(this, new DiscreteCoordinates(2,6));
-		registerActor(runningShoes);
 		registerActor(apple);
-		registerActor(rock);
 		return supSuccess;
 	}
 	

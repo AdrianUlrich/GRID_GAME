@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.swing.text.BadLocationException;
 
 import ch.epfl.cs107.play.game.Game;
+import ch.epfl.cs107.play.game.enigme.actor.Dialog;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.window.Window;
 

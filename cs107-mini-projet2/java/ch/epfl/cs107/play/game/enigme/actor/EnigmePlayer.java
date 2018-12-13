@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import ch.epfl.cs107.play.game.enigme.actor.Talkable;
 import ch.epfl.cs107.play.game.actor.Animation;
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
@@ -23,7 +24,7 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 
 public class EnigmePlayer extends MovableAreaEntity implements Interactor {
-	
+
 	private final static int ANIMATION_DURATION = 8;
 	private final Map<Orientation, Animation> animations;
 	private final EnigmePlayerHandler handler;
@@ -33,6 +34,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 	private boolean wantsViewInteraction;
 	private boolean canRun;
 	private boolean canBeTeleported;
+	private boolean isTalking;
 
 	public EnigmePlayer(Area area, Orientation orientation, DiscreteCoordinates position) {
 		super(area, orientation, position);
@@ -40,10 +42,10 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 		animationTime = 0;
 		animations = new HashMap<>();
 		float factor = 1.2f;
-		Vector anchor = new Vector(0.25f/factor, 0.32f/factor);
-		
+		Vector anchor = new Vector(0.25f / factor, 0.32f / factor);
+
 		Animation[] tempAnimationArray = new Animation[4];
-		
+
 		for (int j = 0; j < 4; ++j) {
 			Sprite[] tempSpriteArray = new Sprite[4];
 			for (int i = 0; i < 4; ++i) {
@@ -61,12 +63,13 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 		handler = new EnigmePlayerHandler();
 		canRun = false;
 		canBeTeleported = true;
+		isTalking = false;
 	}
-	
+
 	public EnigmePlayer(Area area, DiscreteCoordinates position) {
 		this(area, Orientation.DOWN, position);
 	}
-	
+
 	public void enterArea(Area area, DiscreteCoordinates position) {
 		setOwnerArea(area);
 		getOwnerArea().registerActor(this);
@@ -74,32 +77,32 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 //		update(ANIMATION_DURATION);
 		resetMotion();
 	}
-	
+
 	public void enterArea(Area area) {
 		enterArea(area, passedDoor.goesToCoord());
 	}
-	
+
 	public void leaveArea() {
 		getOwnerArea().unregisterActor(this);
 	}
-	
+
 	public void isPassingDoor(boolean isPassingDoor) {
 		this.isPassingDoor = isPassingDoor;
 	}
-	
+
 	void setIsPassingDoor(Door door) {
 		isPassingDoor = true;
 		passedDoor = door;
 	}
-	
+
 	public boolean isPassingDoor() {
 		return isPassingDoor;
 	}
-	
+
 	public Door passedDoor() {
 		return passedDoor;
 	}
-	
+
 	public void setCanBeTeleported(boolean b) {
 		canBeTeleported = false;
 	}
@@ -107,35 +110,35 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 	public Vector getOrientationVector() {
 		return getOrientation().toVector();
 	}
-	
+
 	@Override
 	public List<DiscreteCoordinates> getCurrentCells() {
 		return Collections.singletonList(getCurrentMainCellCoordinates());
 	}
-	
+
 	@Override
 	public boolean takeCellSpace() {
 		// Does take space
 		return true;
 	}
-	
+
 	@Override
 	public boolean isViewInteractable() {
 		// Can be interacted with at distance
 		return true;
 	}
-	
+
 	@Override
 	public boolean isCellInteractable() {
 		// Can be interacted with by contact
 		return true;
 	}
-	
+
 	@Override
 	public void draw(Canvas canvas) {
 		animations.get(getOrientation()).draw(canvas);
 	}
-	
+
 	@Override
 	public List<DiscreteCoordinates> getFieldOfViewCells() {
 		LinkedList<DiscreteCoordinates> fieldOfView = new LinkedList<>();
@@ -166,32 +169,32 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 //	}
 		return fieldOfView;
 	}
-	
+
 	@Override
 	public boolean wantsCellInteraction() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean wantsViewInteraction() {
 		return wantsViewInteraction;
 	}
-	
+
 	@Override
 	public void setWantsViewInteraction(boolean b) {
 		wantsViewInteraction = b;
 	}
-	
+
 	@Override
 	public void interactWith(Interactable other) {
 		other.acceptInteraction(handler);
 	}
-	
+
 	@Override
 	public void acceptInteraction(AreaInteractionVisitor v) {
 		((EnigmeInteractionVisitor) v).interactWith(this);
 	}
-	
+
 	@Override
 	public void update(float deltaTime) {
 		Keyboard keyboard = getOwnerArea().getKeyboard();
@@ -205,39 +208,41 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
 		// allows to move double speed if the character is running.
 		int factor = (keyboard.get(Keyboard.SPACE).isDown() && canRun ? 2 : 1);
-		
-		if (leftArrow.isDown()) {
-			if (getOrientation() == Orientation.LEFT) {
-				moved = move(ANIMATION_DURATION / factor);
-			} else {
-				setOrientation(Orientation.LEFT);
+
+		if (!isTalking) {
+			if (leftArrow.isDown()) {
+				if (getOrientation() == Orientation.LEFT) {
+					moved = move(ANIMATION_DURATION / factor);
+				} else {
+					setOrientation(Orientation.LEFT);
+				}
+			}
+
+			if (rightArrow.isDown()) {
+				if (getOrientation() == Orientation.RIGHT) {
+					moved = move(ANIMATION_DURATION / factor);
+				} else {
+					setOrientation(Orientation.RIGHT);
+				}
+			}
+
+			if (downArrow.isDown()) {
+				if (getOrientation() == Orientation.DOWN) {
+					moved = move(ANIMATION_DURATION / factor);
+				} else {
+					setOrientation(Orientation.DOWN);
+				}
+			}
+
+			if (upArrow.isDown()) {
+				if (getOrientation() == Orientation.UP) {
+					moved = move(ANIMATION_DURATION / factor);
+				} else {
+					setOrientation(Orientation.UP);
+				}
 			}
 		}
-		
-		if (rightArrow.isDown()) {
-			if (getOrientation() == Orientation.RIGHT) {
-				moved = move(ANIMATION_DURATION / factor);
-			} else {
-				setOrientation(Orientation.RIGHT);
-			}
-		}
-		
-		if (downArrow.isDown()) {
-			if (getOrientation() == Orientation.DOWN) {
-				moved = move(ANIMATION_DURATION / factor);
-			} else {
-				setOrientation(Orientation.DOWN);
-			}
-		}
-		
-		if (upArrow.isDown()) {
-			if (getOrientation() == Orientation.UP) {
-				moved = move(ANIMATION_DURATION / factor);
-			} else {
-				setOrientation(Orientation.UP);
-			}
-		}
-		
+
 		if (moved)
 			canBeTeleported = true;
 
@@ -256,7 +261,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 		wantsViewInteraction = lKey.isPressed();
 		super.update(deltaTime);
 	}
-	
+
 	class EnigmePlayerHandler implements EnigmeInteractionVisitor {
 		@Override
 		public void interactWith(Door door) {
@@ -265,31 +270,42 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 //			System.out.println(door+" "+isMoving());
 			}
 		}
-		
+
 		@Override
 		public void interactWith(Collectable collectable) {
 			getOwnerArea().unregisterActor(collectable);
 			collectable.setIsCollected(true);
 		}
-		
+
 		@Override
 		public void interactWith(Switchable switchable) {
 			switchable.switchState();
 		}
-		
+
 		@Override
 		public void interactWith(RunningShoes runningShoes) {
 			getOwnerArea().unregisterActor(runningShoes);
 			runningShoes.setIsCollected(true);
 			canRun = true;
 		}
-		
+
 		@Override
 		public void interactWith(PressureButton pressureButton) {
 			if (isJustArrived()) {
 				pressureButton.switchState();
 			}
 		}
+
+		@Override
+		public void interactWith(Talkable talkable) {
+			isTalking = !isTalking;
+			if (isTalking) {
+				talkable.showText();
+			}
+			else {
+				talkable.hideText();
+			}
+		}
 	}
-	
+
 }
