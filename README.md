@@ -29,7 +29,7 @@ Note : Demo2 Still uses arrow keys to move.
  Solution to Room4 (The 3 previous rooms are those asked for in the PDF file. Following ones are empty.) :
 The room consists of 2 parts, the left one and the right one. You want to head to the right part first as it contains 2 collectable items you will need to get through the left part, the bomb and the Running Shoes. 
 
-First off there's a file among the images which contains the very sketchy idea we had of the maze we wanted to do, in case that could help one solve it. 
+First off there's a Solution folder next to this file in which contains the very sketchy idea we had of the maze we wanted to do, in case that could help one solve it. 
 
 Here's how to get through the maze. We're going for the bomb first. Of the 3 accessible portals, take the one in the upper left corner. Then, take the portal straight ahead of you. Next, you'll want to head for the furthest possible portal, ignoring the 2 that you will eventually pass by. The next portal is the lowest one, on the left. Then, head down to find and loot the bomb. 
 
