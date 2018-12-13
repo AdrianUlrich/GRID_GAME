@@ -10,7 +10,7 @@ public class Or extends LogicSignal {
 	
 	@Override
 	public boolean isOn() {
-		return (s1 != null && s2 != null) || (s1.isOn() && s1.isOn());
+		return (s1 != null && s1.isOn()) || (s2 != null && s2.isOn());
 	}
 	
 }

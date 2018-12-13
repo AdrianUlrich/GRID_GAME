@@ -7,12 +7,13 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.signal.Signal;
+import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Key extends Collectable implements Signal {
+public class Key extends Collectable implements Logic {
 	private final Sprite sprite;
 	
 	
@@ -34,8 +35,8 @@ public class Key extends Collectable implements Signal {
 	}
 	
 	@Override
-	public float getIntensity(float t) {
-		return (isCollected() ? 1.f : 0.f);
+	public boolean isOn() {
+		return isCollected();
 	}
 	
 	@Override

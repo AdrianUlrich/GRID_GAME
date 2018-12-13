@@ -16,6 +16,11 @@ public class Lever extends LogicEntity implements Switchable {
 		setGraphics(new Sprite("lever.big.left", 1.f, 1.f, this), new Sprite("lever.big.right", 1.f, 1.f, this));
 	}
 	
+	public Lever(Area area, DiscreteCoordinates position) {
+		this(area, position, false);
+	}
+	
+	
 	@Override
 	public boolean takeCellSpace() {
 		return true;

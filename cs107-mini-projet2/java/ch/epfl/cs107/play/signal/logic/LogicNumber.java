@@ -6,27 +6,25 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class LogicNumber extends LogicSignal {
-	List<Logic> e;
-	private float nb;
+	Logic[] e;
+	private int nb;
 	
-	public LogicNumber(float nb, Logic... e) {
+	public LogicNumber(int nb, Logic... e) {
 		this.nb = nb;
-		this.e = new LinkedList<>();
-		for (Logic l : e) {
-			this.e.add(l);
-		}
+		this.e = e;
 	}
 	
 	@Override
 	public boolean isOn() {
-		if (e.size() > 12 || nb < 0 || nb > Math.pow(2,e.size()))
+		if (e.length > 12 || nb < 0 || nb > Math.pow(2,e.length))
 			return false;
-		float sum = 0.f;
-		int i = 0;
-		for (Logic s : e) {
-			if (s != null && s.isOn())
-				sum += Math.pow(2, i++);
+		int sum = 0;
+		for (int i = 0; i < e.length; i++) {
+			Logic l = e[i];
+			if (l != null && l.isOn()) {
+				sum += Math.pow(2, i);
+			}
 		}
-		return sum > nb - Signal.EPSILON && sum < nb + Signal.EPSILON;
+		return sum == nb;
 	}
 }

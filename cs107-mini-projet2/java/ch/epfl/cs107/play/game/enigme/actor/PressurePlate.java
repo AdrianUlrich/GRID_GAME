@@ -11,11 +11,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class PressurePlate extends LogicEntity {
-	private final int delay;
-	private int timeSinceActivation;
+	private final float delay;
+	private float timeSinceActivation;
 	
-	public PressurePlate(Area area, DiscreteCoordinates position, int delay) {
-		super(area, position, true);
+	public PressurePlate(Area area, DiscreteCoordinates position, float delay) {
+		super(area, position, false);
 		setGraphics(new Sprite("GroundLightOn", 1.f, 1.f, this), new Sprite("GroundPlateOff", 1.f, 1.f, this));
 		this.delay = delay;
 	}
@@ -55,7 +55,7 @@ public class PressurePlate extends LogicEntity {
 	public void update(float deltaTime) {
 		super.update(deltaTime);
 		if (isOn()) {
-			timeSinceActivation++;
+			timeSinceActivation += deltaTime;
 			if (timeSinceActivation >= delay)
 				Off();
 		}

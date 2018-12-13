@@ -12,7 +12,7 @@ import java.util.List;
 public class PressureButton extends LogicEntity implements Switchable {
 	
 	public PressureButton(Area area, DiscreteCoordinates position) {
-		super(area, position, true);
+		super(area, position, false);
 		setGraphics(new Sprite("GroundLightOn", 1.f, 1.f, this), new Sprite("GroundLightOff", 1.f, 1.f, this));
 	}
 	

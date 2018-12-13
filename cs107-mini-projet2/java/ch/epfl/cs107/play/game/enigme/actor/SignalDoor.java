@@ -14,18 +14,18 @@ public class SignalDoor extends Door {
 	private Sprite[] openDoor;
 	private Sprite[] closedDoor;
 	
-	public SignalDoor(Logic logic, Area area, String destination, DiscreteCoordinates destinationCoords, Orientation orientation, DiscreteCoordinates position, DiscreteCoordinates... otherCells) {
+	public SignalDoor(Logic logic, Area area, String destination, DiscreteCoordinates destinationCoords, DiscreteCoordinates position, DiscreteCoordinates... otherCells) {
 		super(area, destination, destinationCoords, position, otherCells);
 		this.logic = logic;
 		openDoor = new Sprite[1 + otherCells.length];
 		closedDoor = new Sprite[1 + otherCells.length];
-		openDoor[0] = new Sprite("door.close.2", 1.f, 1.f, this);
-		closedDoor[0] = new Sprite("door.open.2", 1.f, 1.f, this);
+		openDoor[0] = new Sprite("door.open.2", 1.f, 1.f, this);
+		closedDoor[0] = new Sprite("door.close.2", 1.f, 1.f, this);
 		for (int i = 0; i < otherCells.length; i++) {
 			DiscreteCoordinates otherCell = otherCells[i];
 			Vector anchor = new Vector(otherCell.x, otherCell.y);
-			openDoor[i + 1] = new Sprite("door.close.2", 1.f, 1.f, this, null, anchor);
-			closedDoor[i + 1] = new Sprite("door.open.2", 1.f, 1.f, this, null, anchor);
+			openDoor[i + 1] = new Sprite("door.open.2", 1.f, 1.f, this, null, anchor);
+			closedDoor[i + 1] = new Sprite("door.close.2", 1.f, 1.f, this, null, anchor);
 		}
 	}
 	
