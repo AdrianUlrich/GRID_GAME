@@ -29,7 +29,7 @@ And change line 31 to acces all Versions:
 pause:
 https://www.freepngimg.com/png/25377-pause-button-image
 explosion:
-https://www.freepngimg.com/png/46466-bomb-download-hq-image-free-png
+http://hasgraphics.com/tag/explosion/
 bomb:
 https://www.freepngimg.com/png/46477-bomb-picture-free-photo-png
 portal:
