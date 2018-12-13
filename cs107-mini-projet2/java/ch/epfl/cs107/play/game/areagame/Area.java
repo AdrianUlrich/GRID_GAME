@@ -7,6 +7,7 @@ import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Interactor;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.io.ResourcePath;
+import ch.epfl.cs107.play.game.enigme.actor.EnigmePlayer;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Transform;
@@ -54,6 +55,8 @@ public abstract class Area implements Playable {
     private ImageGraphics pauseGraphics;
     private float DX;
     private float DY;
+    private EnigmePlayer.Inventory inventory;
+    private boolean inventoryMode;
 
 
     @Override
@@ -69,7 +72,7 @@ public abstract class Area implements Playable {
         viewCandidate = null;
         viewCenter = Vector.ZERO;
         wasVisited = true;
-        pauseGraphics = new ImageGraphics(ResourcePath.getSprite("added/pause.1"),5.f, 5.f, null, Vector.ZERO);
+        pauseGraphics = new ImageGraphics(ResourcePath.getSprite("added/pause.1"), 5.f, 5.f, null, Vector.ZERO);
         DX = getCameraScaleFactor() / 2;
         DY = getCameraScaleFactor() / 2;
         return true;
@@ -254,9 +257,11 @@ public abstract class Area implements Playable {
     }
 
     private void pauseDraw() {
-        final Transform transform = Transform.I.translated(window.getPosition().add(-DX,DY-5));
+        final Transform transform = Transform.I.translated(window.getPosition().add(-DX, DY - 5));
         pauseGraphics.setRelativeTransform(transform);
         pauseGraphics.draw(window);
+        if (inventoryMode)
+            inventory.draw(window);
     }
 
     private final void purgeRegistration() {
@@ -313,5 +318,14 @@ public abstract class Area implements Playable {
     public void unPause() {
         resume(window, fileSystem);
         isPaused = false;
+        inventoryMode = false;
+    }
+
+    public void inventory(EnigmePlayer.Inventory inventory) {
+        if (inventory == null)
+            return;
+        this.inventory = inventory;
+        this.inventoryMode = true;
+        pause();
     }
 }

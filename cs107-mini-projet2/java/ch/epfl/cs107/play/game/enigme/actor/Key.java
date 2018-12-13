@@ -43,5 +43,9 @@ public class Key extends Collectable implements Logic {
 	public void acceptInteraction(AreaInteractionVisitor v) {
 		((EnigmeInteractionVisitor) v).interactWith(this);
 	}
-	
+
+	@Override
+	public Sprite getSprite() {
+		return sprite;
+	}
 }

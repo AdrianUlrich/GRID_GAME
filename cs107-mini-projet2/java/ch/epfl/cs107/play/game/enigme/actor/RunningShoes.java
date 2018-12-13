@@ -39,5 +39,11 @@ public class RunningShoes extends Collectable{
 	public void acceptInteraction(AreaInteractionVisitor v) {
 		((EnigmeInteractionVisitor) v).interactWith(this);
 	}
+
+	@Override
+	public Sprite getSprite() {
+		return sprite;
+	}
+
 }
 
