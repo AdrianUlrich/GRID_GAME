@@ -1,13 +1,7 @@
 package ch.epfl.cs107.play.game.enigme.area;
 
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
-import ch.epfl.cs107.play.game.areagame.actor.Sprite;
-import ch.epfl.cs107.play.game.enigme.actor.Dialog;
-import ch.epfl.cs107.play.game.enigme.actor.Door;
-import ch.epfl.cs107.play.game.enigme.actor.Key;
-import ch.epfl.cs107.play.game.enigme.actor.Portal;
-import ch.epfl.cs107.play.game.enigme.actor.Talkable;
-import ch.epfl.cs107.play.game.enigme.actor.Torch;
+import ch.epfl.cs107.play.game.enigme.actor.*;
 import ch.epfl.cs107.play.game.enigme.actor.demo2.Demo2Player;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;

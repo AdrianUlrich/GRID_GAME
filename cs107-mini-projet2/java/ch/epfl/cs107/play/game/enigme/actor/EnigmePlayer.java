@@ -315,6 +315,11 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 			getOwnerArea().unregisterActor(bomb);
 			bomb.setIsCollected(true);
 		}
+		
+		@Override
+		public void interactWith(ExplodableRock explodableRock) {
+			explodableRock.setBomb(3.f);
+		}
 	}
 
 }
