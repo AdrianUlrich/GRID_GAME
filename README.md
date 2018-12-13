@@ -25,6 +25,12 @@ And change line 31 to acces all Versions:
 
 =========================================================
 ### SPECIAL THANKS
-=========================================================
-For the pause icon
+
+pause:
 https://www.freepngimg.com/png/25377-pause-button-image
+explosion:
+https://www.freepngimg.com/png/46466-bomb-download-hq-image-free-png
+bomb:
+https://www.freepngimg.com/png/46477-bomb-picture-free-photo-png
+portal:
+https://www.uihere.com/free-cliparts/portal-sprite-animation-two-dimensional-space-spark-1568464
