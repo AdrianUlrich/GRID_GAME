@@ -26,7 +26,7 @@ public class Portal extends Door{
 
 			for (int j = 0; j < 4; ++j) {
 				for (int i = 0; i < 4; ++i) {
-					tempSpriteArray[i*4+j] = new Sprite("portal.1", 1.2f*0.5f, 1.2f*0.65625f, this,
+					tempSpriteArray[i*4+j] = new Sprite("added/portal.1", 1.2f*0.5f, 1.2f*0.65625f, this,
 							new RegionOfInterest(j*182 , i * 206, 182, 206), anchor);
 				}
 			}

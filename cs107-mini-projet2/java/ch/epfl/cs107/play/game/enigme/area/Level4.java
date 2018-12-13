@@ -1,13 +1,17 @@
 package ch.epfl.cs107.play.game.enigme.area;
 
+import ch.epfl.cs107.play.game.enigme.actor.Bomb;
 import ch.epfl.cs107.play.game.enigme.actor.Dialog;
 import ch.epfl.cs107.play.game.enigme.actor.Door;
 import ch.epfl.cs107.play.game.enigme.actor.ImmovableRock;
 import ch.epfl.cs107.play.game.enigme.actor.Portal;
+import ch.epfl.cs107.play.game.enigme.actor.PressurePlate;
 import ch.epfl.cs107.play.game.enigme.actor.RunningShoes;
+import ch.epfl.cs107.play.game.enigme.actor.SignalRock;
 import ch.epfl.cs107.play.game.enigme.actor.Talkable;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.signal.logic.Or;
 import ch.epfl.cs107.play.window.Window;
 
 public class Level4 extends EnigmeArea {
@@ -83,6 +87,8 @@ public class Level4 extends EnigmeArea {
 	registerActor(wrongPortalYellow);
 	Portal wrongPortalYellow2 = new Portal(this, "Enigme1", new DiscreteCoordinates(10,30), new DiscreteCoordinates(16, 32));
 	registerActor(wrongPortalYellow2);
+	Portal backPortal = new Portal(this, "Enigme1", new DiscreteCoordinates(7,4), new DiscreteCoordinates(12, 11));
+	registerActor(backPortal);
 	ImmovableRock rock1 = new ImmovableRock(this, new DiscreteCoordinates(14,36));
 	registerActor(rock1);
 	ImmovableRock rock2 = new ImmovableRock(this, new DiscreteCoordinates(16,34));
@@ -119,8 +125,26 @@ public class Level4 extends EnigmeArea {
 	registerActor(runningShoes);
 	Door interiorDoor = new Door(this, "Enigme2", new DiscreteCoordinates(7,1), new DiscreteCoordinates(6,32));
 	registerActor(interiorDoor);
-	Talkable pnj = new Talkable(this, new DiscreteCoordinates(12,8), new Dialog("In my youth I was a very good runner, but i'm far too slow to make it in time now...","dialog.1",this), "old.man.4");
+	Bomb bomb = new Bomb(this, new DiscreteCoordinates(10,19));
+	registerActor(bomb);
+	Talkable pnj = new Talkable(this, new DiscreteCoordinates(12,8), new Dialog("Usain Bolt : In my youth I was a very good runner, but i'm far too slow to make it in time now...","dialog.1",this), "old.man.4");
 	registerActor(pnj);
+	Talkable pnj2 = new Talkable(this, new DiscreteCoordinates(12,16), new Dialog("Kid From Tenesse : Rock blows... i'm a country fan.","dialog.1",this), "boy.5");
+	registerActor(pnj2);
+	Talkable pnj3 = new Talkable(this, new DiscreteCoordinates(21,9), new Dialog("Geralt : There might be something useful in this maze. But i hate portals.","dialog.1",this), "old.man.5");
+	registerActor(pnj3);
+	Talkable pnj4 = new Talkable(this, new DiscreteCoordinates(23,5), new Dialog("Female quotas : Thought you were stuck here? The devs were nice enough to give you a portal back to the Level Selector.","dialog.1",this), "girl.6");
+	registerActor(pnj4);
+	PressurePlate pressurePlate = new PressurePlate(this, new DiscreteCoordinates(7,5),1.f);
+	registerActor(pressurePlate);
+	PressurePlate pressurePlate2 = new PressurePlate(this, new DiscreteCoordinates(6,5),1.f);
+	registerActor(pressurePlate2);
+	Or pressurePlates = new Or(pressurePlate,pressurePlate2);
+	SignalRock signalRock= new SignalRock(pressurePlates ,this, new DiscreteCoordinates(7,10));
+	registerActor(signalRock);
+	SignalRock signalRock2 = new SignalRock(pressurePlates ,this, new DiscreteCoordinates(6,10));
+	registerActor(signalRock2);
+	
 	return supSuccess;
     }
     
