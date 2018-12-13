@@ -205,7 +205,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 		Button downArrow = keyboard.get(Keyboard.S);
 		Button upArrow = keyboard.get(Keyboard.W);
 		Button lKey = keyboard.get(Keyboard.L);
-		Button bKey = keyboard.get(Keyboard.B);
+// DEBUG		Button bKey = keyboard.get(Keyboard.B);
 		boolean moved = false;
 
 		// allows to move double speed if the character is running.
@@ -248,9 +248,10 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 		if (moved)
 			canBeTeleported = true;
 
-		if (bKey.isPressed()) {
-			System.out.println(getCurrentMainCellCoordinates());
-		}
+		/**
+		 * DEBUG if (bKey.isPressed()) {
+		 * System.out.println(getCurrentMainCellCoordinates()); }
+		 */
 		if (isMoving()) {
 			if (animationTime % 3 == 0)
 				animations.get(getOrientation()).incrementAnimation();

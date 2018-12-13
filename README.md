@@ -21,6 +21,8 @@ And change line 31 to acces all Versions:
 - L : Interact
 - Space : Sprint (Requires Running Shoes)
 
+Note : Demo2 Still uses arrow keys to move.
+
 =========================================================
  Solution to Room4 (The 3 previous rooms are those asked for in the PDF file. Following ones are empty.) :
 The room consists of 2 parts, the left one and the right one. You want to head to the right part first as it contains 2 collectable items you will need to get through the left part, the bomb and the Running Shoes. 
