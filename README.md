@@ -19,6 +19,7 @@ And change line 31 to acces all Versions:
 - D : Right
 
 - L : Interact
+- K : Pause
 - Space : Sprint (Requires Running Shoes)
 
 Note : Demo2 Still uses arrow keys to move.

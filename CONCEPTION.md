@@ -30,3 +30,4 @@ Therefor the player can only interact with a Teleporter or Door after using anot
 
 -An immovable rock Class, just an Entity used to block some paths.
 
+-Added a state in area allowing to pause the game by pressing "K".
