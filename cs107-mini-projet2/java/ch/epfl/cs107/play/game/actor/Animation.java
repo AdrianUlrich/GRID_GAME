@@ -28,7 +28,7 @@ public class Animation implements Graphics {
 	public void incrementAnimation() {
 		currentFrameIndex = (currentFrameIndex + 1) % animationFrames.size();
 	}
-
+	
 	public void resetAnimation() {
 		currentFrameIndex = 0;
 	}

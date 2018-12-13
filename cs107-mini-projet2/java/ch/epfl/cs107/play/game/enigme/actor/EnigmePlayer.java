@@ -306,6 +306,11 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 				talkable.hideText();
 			}
 		}
+		
+		@Override
+		public void interactWith(ExplodableRock explodableRock) {
+			explodableRock.setBomb(3.f);
+		}
 	}
 
 }
