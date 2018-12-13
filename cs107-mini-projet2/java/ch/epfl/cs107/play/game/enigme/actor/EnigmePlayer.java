@@ -42,8 +42,8 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 		isPassingDoor = false;
 		animationTime = 0;
 		animations = new HashMap<>();
-		float factor = 1.2f;
-		Vector anchor = new Vector(0.25f / factor, 0.32f / factor);
+		float factor = 1.3f;
+		Vector anchor = new Vector(0.2f / factor, 0.1f / factor);
 
 		Animation[] tempAnimationArray = new Animation[4];
 
@@ -204,7 +204,9 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 		Button rightArrow = keyboard.get(Keyboard.D);
 		Button downArrow = keyboard.get(Keyboard.S);
 		Button upArrow = keyboard.get(Keyboard.W);
-		Button lKey = keyboard.get(Keyboard.L);
+		Button LKey = keyboard.get(Keyboard.L);
+		Button KKey = keyboard.get(Keyboard.K);
+		Button IKey = keyboard.get(Keyboard.I);
 // DEBUG		Button bKey = keyboard.get(Keyboard.B);
 		boolean moved = false;
 
@@ -261,7 +263,9 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 			animationTime = 0;
 		}
 
-		wantsViewInteraction = lKey.isPressed();
+		wantsViewInteraction = LKey.isPressed();
+//		if (IKey.isPressed()) getOwnerArea().inventory(inventory);
+
 		super.update(deltaTime);
 	}
 

@@ -42,7 +42,7 @@ public class ExplodableRock extends AreaEntity implements Interactor {
 		for (int i = 0; i < 81; i++) {
 			int x = i % 9;
 			int y = i / 9;
-			sprites[i] = new Sprite("added/explosion.1", 3.f, 3.f, this, new RegionOfInterest(x * factor, y * factor, factor, factor), new Vector(-1f, -01f));
+			sprites[i] = new Sprite("added/explosion.1", 5.f, 5.f, this, new RegionOfInterest(x * factor, y * factor, factor, factor), new Vector(-2f, -2f));
 		}
 		handler = new EnigmeExplosionRockHandler();
 		explosion = new Animation(sprites);
