@@ -2,6 +2,7 @@ package ch.epfl.cs107.play.game.enigme.area;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Background;
+import ch.epfl.cs107.play.game.areagame.actor.Foreground;
 import ch.epfl.cs107.play.game.enigme.EnigmeBehavior;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.window.Window;
@@ -23,6 +24,7 @@ public abstract class EnigmeArea extends Area {
 		boolean supSuccess = super.begin(window, fileSystem);
 		setBehavior(new EnigmeBehavior(window , getTitle()));
 		registerActor(new Background(this));
+		registerActor(new Foreground(this));
 
 		return supSuccess;
 	}
