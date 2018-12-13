@@ -151,6 +151,10 @@ public class Level4 extends EnigmeArea {
 	registerActor(explodableRock1);
 	ExplodableRock explodableRock2 = new ExplodableRock(this, new DiscreteCoordinates(6,18));
 	registerActor(explodableRock2);
+	ExplodableRock explodableRock3 = new ExplodableRock(this, new DiscreteCoordinates(7,18));
+	registerActor(explodableRock3);
+	ExplodableRock explodableRock4 = new ExplodableRock(this, new DiscreteCoordinates(6,17));
+	registerActor(explodableRock4);
 	
 	return supSuccess;
     }
