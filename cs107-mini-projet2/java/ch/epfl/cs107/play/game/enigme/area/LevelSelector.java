@@ -3,6 +3,7 @@ package ch.epfl.cs107.play.game.enigme.area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.enigme.actor.Dialog;
 import ch.epfl.cs107.play.game.enigme.actor.Door;
+import ch.epfl.cs107.play.game.enigme.actor.ExplodableRock;
 import ch.epfl.cs107.play.game.enigme.actor.RunningShoes;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -44,6 +45,8 @@ public class LevelSelector extends EnigmeArea {
 			registerActor(door);
 			RunningShoes runningShoes = new RunningShoes(this,new DiscreteCoordinates(4,5));
 			registerActor(runningShoes);
+			registerActor(new ExplodableRock(this,new DiscreteCoordinates(7,5)));
+			registerActor(new ExplodableRock(this,new DiscreteCoordinates(8,4)));
 		}
 		return supSuccess;
 	}

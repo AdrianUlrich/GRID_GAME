@@ -3,20 +3,20 @@ package ch.epfl.cs107.play.game.enigme.actor;
 import ch.epfl.cs107.play.game.actor.Animation;
 import ch.epfl.cs107.play.game.actor.Graphics;
 import ch.epfl.cs107.play.game.areagame.Area;
-import ch.epfl.cs107.play.game.areagame.actor.AreaEntity;
-import ch.epfl.cs107.play.game.areagame.actor.Orientation;
-import ch.epfl.cs107.play.game.areagame.actor.Sprite;
+import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RegionOfInterest;
+import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Audio;
 import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
-public class ExplodableRock extends AreaEntity {
+public class ExplodableRock extends AreaEntity implements Interactor {
 	private final int explosionMaxIndex;
 	private Graphics rock;
 	private boolean isBombed;
@@ -27,6 +27,8 @@ public class ExplodableRock extends AreaEntity {
 	private Animation explosion;
 	private int explosionIndex;
 	private boolean isExploded;
+	private EnigmeExplosionRockHandler handler;
+	private boolean chaining;
 	
 	public ExplodableRock(Area area, DiscreteCoordinates position) {
 		super(area, Orientation.DOWN, position);
@@ -35,13 +37,47 @@ public class ExplodableRock extends AreaEntity {
 		bomb = new Sprite("added/bomb.1", 1.f, 1.f, this);
 		isExploding = false;
 		explosionMaxIndex = 80;
-		Sprite[] sprites = new Sprite[80];
+		int factor = 100;
+		Sprite[] sprites = new Sprite[81];
 		for (int i = 0; i < 80; i++) {
 			int x = i % 9;
 			int y = i / 9;
-			sprites[i] = new Sprite("added/explosion.1",1.f,1.f,this,new RegionOfInterest(x*10,y*10,10,10));
+			sprites[i] = new Sprite("added/explosion.1", 3.f, 3.f, this, new RegionOfInterest(x * factor, y * factor, factor, factor), new Vector(-1f, -01f));
 		}
+		handler = new EnigmeExplosionRockHandler();
 		explosion = new Animation(sprites);
+	}
+	
+	@Override
+	public List<DiscreteCoordinates> getFieldOfViewCells() {
+		List<DiscreteCoordinates> chainReaction = new LinkedList<>();
+		DiscreteCoordinates cell = getCurrentMainCellCoordinates();
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				chainReaction.add(new DiscreteCoordinates(cell.x + i, cell.y + j));
+			}
+		}
+		return chainReaction;
+	}
+	
+	@Override
+	public boolean wantsCellInteraction() {
+		return false;
+	}
+	
+	@Override
+	public boolean wantsViewInteraction() {
+		return isExploding && chaining;
+	}
+	
+	@Override
+	public void setWantsViewInteraction(boolean b) {
+		chaining = b;
+	}
+	
+	@Override
+	public void interactWith(Interactable interactable) {
+		interactable.acceptInteraction(handler);
 	}
 	
 	public void setBomb(float fuseLength) {
@@ -51,21 +87,30 @@ public class ExplodableRock extends AreaEntity {
 	}
 	
 	private void explode() {
-		isExploding = true;
-		explosionIndex = 0;
+		if (!isExploded) {
+			if (isBombed) {
+				if (!isExploding) {
+					isExploding = true;
+					chaining = true;
+					explosionIndex = 0;
+				}
+			} else {
+				isExploded = true;
+				explosionIndex = 80;
+			}
+		}
 	}
 	
 	@Override
 	public void draw(Canvas canvas) {
 		if (!isExploded) {
-			if (explosionIndex < 40)
+			if (explosionIndex < 40) {
 				rock.draw(canvas);
-			if (isBombed) {
-				if (isExploding) {
-					explosion.draw(canvas);
-				} else {
-					bomb.draw(canvas);
-				}
+			}
+			if (isExploding) {
+				explosion.draw(canvas);
+			} else if (isBombed) {
+				bomb.draw(canvas);
 			}
 		}
 	}
@@ -73,18 +118,17 @@ public class ExplodableRock extends AreaEntity {
 	@Override
 	public void update(float deltaTime) {
 		if (!isExploded) {
-			if (isBombed) {
-				if (isExploding) {
-					if (explosionIndex < explosionMaxIndex) {
-						explosion.incrementAnimation();
-						++explosionIndex;
-					} else {
-						isExploded = true;
-					}
+			if (isExploding) {
+				if (explosionIndex < explosionMaxIndex) {
+					explosion.incrementAnimation();
+					++explosionIndex;
 				} else {
-					fuseUsed += deltaTime;
-					if (fuseUsed >= fuseLength)
-						explode();
+					isExploded = true;
+				}
+			} else if (isBombed) {
+				fuseUsed += deltaTime;
+				if (fuseUsed >= fuseLength) {
+					explode();
 				}
 			}
 		}
@@ -102,7 +146,7 @@ public class ExplodableRock extends AreaEntity {
 	
 	@Override
 	public boolean isViewInteractable() {
-		return !isBombed;
+		return !isExploding && !isExploded;
 	}
 	
 	@Override
@@ -115,4 +159,12 @@ public class ExplodableRock extends AreaEntity {
 		((EnigmeInteractionVisitor) v).interactWith(this);
 	}
 	
+	
+	class EnigmeExplosionRockHandler implements EnigmeInteractionVisitor {
+		
+		@Override
+		public void interactWith(ExplodableRock explodableRock) {
+			explodableRock.explode();
+		}
+	}
 }
