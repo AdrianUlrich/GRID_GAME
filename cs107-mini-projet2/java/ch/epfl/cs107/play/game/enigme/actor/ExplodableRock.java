@@ -39,7 +39,7 @@ public class ExplodableRock extends AreaEntity implements Interactor {
 		explosionMaxIndex = 80;
 		int factor = 100;
 		Sprite[] sprites = new Sprite[81];
-		for (int i = 0; i < 80; i++) {
+		for (int i = 0; i < 81; i++) {
 			int x = i % 9;
 			int y = i / 9;
 			sprites[i] = new Sprite("added/explosion.1", 3.f, 3.f, this, new RegionOfInterest(x * factor, y * factor, factor, factor), new Vector(-1f, -01f));
@@ -146,6 +146,7 @@ public class ExplodableRock extends AreaEntity implements Interactor {
 	
 	@Override
 	public boolean isViewInteractable() {
+		System.out.println("yes");
 		return !isExploding && !isExploded;
 	}
 	
