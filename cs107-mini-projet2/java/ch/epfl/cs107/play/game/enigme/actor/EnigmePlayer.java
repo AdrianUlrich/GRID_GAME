@@ -334,13 +334,13 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     }
 
     public class Inventory implements Graphics {
-        private Map<Collectable,Sprite> collectables;
+        private Map<Collectable, Sprite> collectables;
         private ShapeGraphics shapeGraphics;
 
         public Inventory() {
             this.collectables = new HashMap<>();
             this.shapeGraphics = new ShapeGraphics(new Polygon(0, 0, 0, 1, 1, 1, 1, 0)
-                    , Color.DARK_GRAY, Color.GRAY, .05f, .7f, 2000);
+                    , Color.DARK_GRAY, Color.GRAY, .05f, .7f, 2999);
         }
 
         public void add(Collectable collectable) {
@@ -348,18 +348,20 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
             collectables.put(collectable, sprite);
             sprite.setParent(null);
             sprite.setAnchor(Vector.ZERO);
+            sprite.setDepth(3000);
         }
 
         @Override
         public void draw(Canvas canvas) {
             int size = collectables.size();
-            Vector d = getOwnerArea().getWindow().getPosition().sub(DX, DY);
-            Transform transform = Transform.I.scaled(1, size).translated(d);
-            shapeGraphics.setRelativeTransform(transform);
+            Vector d = getOwnerArea().getWindow().getPosition().sub(DX / 2, DY / 2);
+            Transform transform = Transform.I.translated(d);
+            shapeGraphics.setRelativeTransform(transform.scaled(size, 1).translated(1-size,0));
             shapeGraphics.draw(canvas);
             int i = 0;
             for (Sprite sprite : collectables.values()) {
-                sprite.setRelativeTransform(transform.translated(i,0.f));
+                sprite.setRelativeTransform(transform.translated(i, 0.f));
+                sprite.draw(canvas);
                 ++i;
             }
         }
