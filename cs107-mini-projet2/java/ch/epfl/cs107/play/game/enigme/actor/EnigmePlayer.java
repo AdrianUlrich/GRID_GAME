@@ -32,6 +32,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 	private boolean wantsViewInteraction;
 	private final EnigmePlayerHandler handler;
 	private boolean canRun;
+	private boolean canBeTeleported;
 
 	public EnigmePlayer(Area area, Orientation orientation, DiscreteCoordinates position) {
 		super(area, orientation, position);
@@ -45,8 +46,8 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 		for (int j = 0; j < 4; ++j) {
 			Sprite[] tempSpriteArray = new Sprite[4];
 			for (int i = 0; i < 4; ++i) {
-				tempSpriteArray[i] = new Sprite("max.new.1", 1.2f*0.5f, 1.2f*0.65625f, this,
-						new RegionOfInterest(j*16, i * 21, 16, 21), anchor);
+				tempSpriteArray[i] = new Sprite("max.new.1", 1.2f * 0.5f, 1.2f * 0.65625f, this,
+						new RegionOfInterest(j * 16, i * 21, 16, 21), anchor);
 			}
 			Animation tempAnimation = new Animation(tempSpriteArray);
 			tempAnimationArray[j] = tempAnimation;
@@ -58,6 +59,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 		wantsViewInteraction = false;
 		handler = new EnigmePlayerHandler();
 		canRun = false;
+		canBeTeleported = true;
 	}
 
 	public EnigmePlayer(Area area, DiscreteCoordinates position) {
@@ -95,6 +97,10 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
 	public Door passedDoor() {
 		return passedDoor;
+	}
+	
+	public void setCanBeTeleported(boolean b) {
+		canBeTeleported = false;
 	}
 
 	public Vector getOrientationVector() {
@@ -193,13 +199,15 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 		Button downArrow = keyboard.get(Keyboard.S);
 		Button upArrow = keyboard.get(Keyboard.W);
 		Button lKey = keyboard.get(Keyboard.L);
+		Button bKey = keyboard.get(Keyboard.B);
+		boolean moved = false;
 
-		//allows to move double speed if the character is running.
+		// allows to move double speed if the character is running.
 		int factor = (keyboard.get(Keyboard.SPACE).isDown() && canRun ? 2 : 1);
 
 		if (leftArrow.isDown()) {
 			if (getOrientation() == Orientation.LEFT) {
-				move(ANIMATION_DURATION / factor);
+				moved = move(ANIMATION_DURATION / factor);
 			} else {
 				setOrientation(Orientation.LEFT);
 			}
@@ -207,7 +215,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
 		if (rightArrow.isDown()) {
 			if (getOrientation() == Orientation.RIGHT) {
-				move(ANIMATION_DURATION / factor);
+				moved = move(ANIMATION_DURATION / factor);
 			} else {
 				setOrientation(Orientation.RIGHT);
 			}
@@ -215,7 +223,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
 		if (downArrow.isDown()) {
 			if (getOrientation() == Orientation.DOWN) {
-				move(ANIMATION_DURATION / factor);
+				moved = move(ANIMATION_DURATION / factor);
 			} else {
 				setOrientation(Orientation.DOWN);
 			}
@@ -223,30 +231,38 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
 		if (upArrow.isDown()) {
 			if (getOrientation() == Orientation.UP) {
-				move(ANIMATION_DURATION / factor);
+				moved = move(ANIMATION_DURATION / factor);
 			} else {
 				setOrientation(Orientation.UP);
 			}
 		}
+		
+		if (moved)
+			canBeTeleported = true;
 
-		if(isMoving()) {
-			if (animationTime%3 == 0) animations.get(getOrientation()).incrementAnimation();
+		if (bKey.isPressed()) {
+			System.out.println(getCurrentMainCellCoordinates());
+		}
+		if (isMoving()) {
+			if (animationTime % 3 == 0)
+				animations.get(getOrientation()).incrementAnimation();
 			animationTime++;
 		} else {
 			animations.get(getOrientation()).resetAnimation();
 			animationTime = 0;
 		}
-		
+
 		wantsViewInteraction = lKey.isPressed();
-		
 		super.update(deltaTime);
 	}
 
 	class EnigmePlayerHandler implements EnigmeInteractionVisitor {
 		@Override
 		public void interactWith(Door door) {
-			setIsPassingDoor(door);
+			if (canBeTeleported) {
+				setIsPassingDoor(door);
 //			System.out.println(door+" "+isMoving());
+			}
 		}
 
 		@Override

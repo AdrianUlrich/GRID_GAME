@@ -2,6 +2,7 @@ package ch.epfl.cs107.play.game.enigme;
 
 import ch.epfl.cs107.play.game.areagame.AreaGame;
 import ch.epfl.cs107.play.game.enigme.actor.EnigmePlayer;
+import ch.epfl.cs107.play.game.enigme.area.InteriorRoom;
 import ch.epfl.cs107.play.game.enigme.area.Level1;
 import ch.epfl.cs107.play.game.enigme.area.Level2;
 import ch.epfl.cs107.play.game.enigme.area.Level3;
@@ -34,6 +35,7 @@ public class Enigme extends AreaGame {
 		addArea(new Level2());
 		addArea(new Level3());
 		addArea(new Level4());
+		addArea(new InteriorRoom());
 		setCurrentArea("LevelSelector", false);
 		player = new EnigmePlayer(getCurrentArea(), (new DiscreteCoordinates(5, 5)));
 //		playerDebugIndicator = new TextGraphics("O", .3f, null, Color.GREEN, .15f, true, false, new Vector(.5f, .5f), // DEBUG
@@ -49,10 +51,10 @@ public class Enigme extends AreaGame {
 		if (player.isPassingDoor()) {
 			player.isPassingDoor(false);
 			if (!player.isMoving()) {
-				System.out.println("passdoor*");
 				player.leaveArea();
 				setCurrentArea(player.passedDoor().goesTo(), false);
 				player.enterArea(getCurrentArea());
+				player.setCanBeTeleported(false);
 				getCurrentArea().setViewCandidate(player);
 			}
 		}

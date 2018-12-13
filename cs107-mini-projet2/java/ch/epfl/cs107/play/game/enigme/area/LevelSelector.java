@@ -31,6 +31,7 @@ public class LevelSelector extends EnigmeArea {
 					break;
 				case 4:
 					destination = "Enigme1";
+					destinationCoords = new DiscreteCoordinates(16,0);
 					break;
 				default: {
 					destination = "LevelSelector";
