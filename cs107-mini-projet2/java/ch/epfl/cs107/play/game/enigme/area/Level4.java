@@ -3,6 +3,7 @@ package ch.epfl.cs107.play.game.enigme.area;
 import ch.epfl.cs107.play.game.enigme.actor.Bomb;
 import ch.epfl.cs107.play.game.enigme.actor.Dialog;
 import ch.epfl.cs107.play.game.enigme.actor.Door;
+import ch.epfl.cs107.play.game.enigme.actor.ExplodableRock;
 import ch.epfl.cs107.play.game.enigme.actor.ImmovableRock;
 import ch.epfl.cs107.play.game.enigme.actor.Portal;
 import ch.epfl.cs107.play.game.enigme.actor.PressurePlate;
@@ -71,9 +72,9 @@ public class Level4 extends EnigmeArea {
 	registerActor(wrongPortal9);
 	Portal wrongPortal10 = new Portal(this, "Enigme1", new DiscreteCoordinates(23,12), new DiscreteCoordinates(23, 27));
 	registerActor(wrongPortal10);
-	Portal wrongPortalBlue = new Portal(this, "Enigme1", new DiscreteCoordinates(14,20), new DiscreteCoordinates(18, 9));
+	Portal wrongPortalBlue = new Portal(this, "Enigme1", new DiscreteCoordinates(15,20), new DiscreteCoordinates(18, 9));
 	registerActor(wrongPortalBlue);
-	Portal wrongPortalBlue2 = new Portal(this, "Enigme1", new DiscreteCoordinates(18,9), new DiscreteCoordinates(14, 20));
+	Portal wrongPortalBlue2 = new Portal(this, "Enigme1", new DiscreteCoordinates(18,9), new DiscreteCoordinates(15, 20));
 	registerActor(wrongPortalBlue2);
 	Portal wrongPortalPurple = new Portal(this, "Enigme1", new DiscreteCoordinates(21,37), new DiscreteCoordinates(21, 25));
 	registerActor(wrongPortalPurple);
@@ -131,10 +132,12 @@ public class Level4 extends EnigmeArea {
 	registerActor(pnj);
 	Talkable pnj2 = new Talkable(this, new DiscreteCoordinates(12,16), new Dialog("Kid From Tenesse : Rock blows... i'm a country fan.","dialog.1",this), "boy.5");
 	registerActor(pnj2);
-	Talkable pnj3 = new Talkable(this, new DiscreteCoordinates(21,9), new Dialog("Geralt : There might be something useful in this maze. But i hate portals.","dialog.1",this), "old.man.5");
+	Talkable pnj3 = new Talkable(this, new DiscreteCoordinates(21,9), new Dialog("Geralt : There might be something useful in this maze. But I hate portals.","dialog.1",this), "old.man.5");
 	registerActor(pnj3);
 	Talkable pnj4 = new Talkable(this, new DiscreteCoordinates(23,5), new Dialog("Female quotas : Thought you were stuck here? The devs were nice enough to give you a portal back to the Level Selector.","dialog.1",this), "girl.6");
 	registerActor(pnj4);
+	Talkable pnj5 = new Talkable(this, new DiscreteCoordinates(22,37), new Dialog("Christopher Colombus : I'm completely lost.","dialog.1",this), "max.ghost.1");
+	registerActor(pnj5);
 	PressurePlate pressurePlate = new PressurePlate(this, new DiscreteCoordinates(7,5),1.f);
 	registerActor(pressurePlate);
 	PressurePlate pressurePlate2 = new PressurePlate(this, new DiscreteCoordinates(6,5),1.f);
@@ -144,6 +147,10 @@ public class Level4 extends EnigmeArea {
 	registerActor(signalRock);
 	SignalRock signalRock2 = new SignalRock(pressurePlates ,this, new DiscreteCoordinates(6,10));
 	registerActor(signalRock2);
+	ExplodableRock explodableRock1 = new ExplodableRock(this, new DiscreteCoordinates(7,17));
+	registerActor(explodableRock1);
+	ExplodableRock explodableRock2 = new ExplodableRock(this, new DiscreteCoordinates(6,18));
+	registerActor(explodableRock2);
 	
 	return supSuccess;
     }
